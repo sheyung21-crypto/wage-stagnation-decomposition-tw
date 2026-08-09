@@ -25,8 +25,27 @@ def write_results_manifest(results_dir: Path) -> Path:
                 }
             )
     output = results_dir / "results_manifest.json"
+    table_mapping = {
+        int(path.stem.split("_")[1]): path.relative_to(results_dir.parent).as_posix()
+        for path in sorted((results_dir / "tables").glob("table_*.csv"))
+    }
+    figure_mapping = {
+        int(path.stem.split("_")[1]): path.relative_to(results_dir.parent).as_posix()
+        for path in sorted((results_dir / "figures").glob("figure_*.pdf"))
+    }
     output.write_text(
-        json.dumps({"files": files}, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(
+            {
+                "paper_number_mapping": {
+                    "tables": table_mapping,
+                    "figures": figure_mapping,
+                },
+                "files": files,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
     return output

@@ -1,4 +1,38 @@
 {
+  "paper_number_mapping": {
+    "tables": {
+      "1": "results/tables/table_01_data_sources.csv",
+      "2": "results/tables/table_02_external_validation.csv",
+      "3": "results/tables/table_03_main_decomposition.csv",
+      "4": "results/tables/table_04_granularity_comparison.csv",
+      "5": "results/tables/table_05_monthly_hourly.csv",
+      "6": "results/tables/table_06_regular_total.csv",
+      "7": "results/tables/table_07_period_sensitivity.csv",
+      "8": "results/tables/table_08_counterfactual.csv",
+      "9": "results/tables/table_09_inference.csv",
+      "10": "results/tables/table_10_chained_decomposition.csv",
+      "11": "results/tables/table_11_chained_vs_endpoint.csv",
+      "12": "results/tables/table_12_institutional_periods.csv",
+      "13": "results/tables/table_13_covid_predictions.csv",
+      "14": "results/tables/table_14_industry_contributions.csv",
+      "15": "results/tables/table_15_total_wage_decomposition.csv",
+      "16": "results/tables/table_16_total_wage_endpoint_sensitivity.csv",
+      "17": "results/tables/table_17_hours_mechanism.csv",
+      "18": "results/tables/table_18_official_comparison.csv"
+    },
+    "figures": {
+      "1": "results/figures/figure_01_real_monthly_hourly.pdf",
+      "2": "results/figures/figure_02_regular_total.pdf",
+      "3": "results/figures/figure_03_employment_shares.pdf",
+      "4": "results/figures/figure_04_decomposition_methods.pdf",
+      "5": "results/figures/figure_05_granularity.pdf",
+      "6": "results/figures/figure_06_counterfactual.pdf",
+      "7": "results/figures/figure_07_chained_cumulative.pdf",
+      "8": "results/figures/figure_08_industry_contributions.pdf",
+      "9": "results/figures/figure_09_hours_by_industry.pdf",
+      "10": "results/figures/figure_10_official_comparison.pdf"
+    }
+  },
   "files": [
     {
       "path": "results/figures/figure_01_real_monthly_hourly.pdf",
@@ -31,9 +65,29 @@
       "sha256": "35aa9c0fa4b407be94b34f3a47b7b80a93bcb1911012a120bd8bd9f127025186"
     },
     {
+      "path": "results/figures/figure_07_chained_cumulative.pdf",
+      "bytes": 16645,
+      "sha256": "83676b7a37d52e32d63b96dac0cfec9dbb0012d80ed6b2a0972d4cb713d3ba79"
+    },
+    {
+      "path": "results/figures/figure_08_industry_contributions.pdf",
+      "bytes": 13632,
+      "sha256": "a5fe07dd2e6cfa23acfceff96973951abd24a4c0ab450f940fe90c12934af62d"
+    },
+    {
+      "path": "results/figures/figure_09_hours_by_industry.pdf",
+      "bytes": 16153,
+      "sha256": "708e2ad29a239ac012188adc37f6ae4dcd259a5784a793f3214ea4b5101bc43f"
+    },
+    {
+      "path": "results/figures/figure_10_official_comparison.pdf",
+      "bytes": 14265,
+      "sha256": "0278b968587437ddff274dcbb938fde18048e79974c3935351fe62de5319ba98"
+    },
+    {
       "path": "results/tables/table_01_data_sources.csv",
-      "bytes": 765,
-      "sha256": "c935e2fff5e3e03e13a7bc0a5af264839829c6bdbb3ab336ef056fd10dd1f231"
+      "bytes": 877,
+      "sha256": "c38c5ee4e1147ba334a0f8994938e1b69fb7a9b5f4277753f6262a851950167b"
     },
     {
       "path": "results/tables/table_02_external_validation.csv",
@@ -74,6 +128,51 @@
       "path": "results/tables/table_09_inference.csv",
       "bytes": 643,
       "sha256": "b7b2ad6021fedfdd0917f7202a581a9f898b4e9b6a52bf055741d6170c939fbd"
+    },
+    {
+      "path": "results/tables/table_10_chained_decomposition.csv",
+      "bytes": 22213,
+      "sha256": "d916fdd4d3f74a480c483e4d7be33e896ab33bff7399d059d7693517bec59c1c"
+    },
+    {
+      "path": "results/tables/table_11_chained_vs_endpoint.csv",
+      "bytes": 1109,
+      "sha256": "72a76481c908a0d288fffc3fb819f50ffbafa197c58fc282287c4a71c0534634"
+    },
+    {
+      "path": "results/tables/table_12_institutional_periods.csv",
+      "bytes": 5230,
+      "sha256": "b1c15d3102cd2706bafe80251658fea2768227e5fa68f8f7654c1dd978bee950"
+    },
+    {
+      "path": "results/tables/table_13_covid_predictions.csv",
+      "bytes": 637,
+      "sha256": "122eeaa10ec0c2123517754f25c95a8f48c77e55307b10d5d6182c89d1536e9a"
+    },
+    {
+      "path": "results/tables/table_14_industry_contributions.csv",
+      "bytes": 5499,
+      "sha256": "ab2ee49dafa914005c293fdb7de3cc1a235dae0062d69a1664bb4d0a5fae2351"
+    },
+    {
+      "path": "results/tables/table_15_total_wage_decomposition.csv",
+      "bytes": 5234,
+      "sha256": "6422329088af6f01a3a5c7ed9dcbfe33d6aafec2a2618a62c6e584597c954405"
+    },
+    {
+      "path": "results/tables/table_16_total_wage_endpoint_sensitivity.csv",
+      "bytes": 3478,
+      "sha256": "588d2d3977725f936aa42dfab3c38663c8661b355e4aec7cf7db3863d356c43b"
+    },
+    {
+      "path": "results/tables/table_17_hours_mechanism.csv",
+      "bytes": 56131,
+      "sha256": "f464ce2a986747a09f4f0cb54adc67a769c6dd9b14e8866b8e282c3ef6aa1f2d"
+    },
+    {
+      "path": "results/tables/table_18_official_comparison.csv",
+      "bytes": 9200,
+      "sha256": "7080ebf8606bed7af78115823505e934c9fedfc438aeb1d0842cb0b3375d046c"
     }
   ]
 }

@@ -298,6 +298,24 @@ def read_annual_cpi(path: Path, start: int = 2000, end: int = 2024) -> pd.DataFr
     return monthly.groupby("year", as_index=False).cpi.mean()
 
 
+def read_official_real_wage(path: Path, start: int = 2000, end: int = 2024) -> pd.DataFrame:
+    """Read the annual real-wage sequence exported from the official query system."""
+    frame = pd.read_csv(path)
+    expected_columns = {
+        "year",
+        "official_real_total_monthly",
+        "official_real_regular_monthly",
+    }
+    if set(frame.columns) != expected_columns:
+        raise ValueError("Official real-wage extract has unexpected columns")
+    expected_years = list(range(start, end + 1))
+    if frame.year.tolist() != expected_years:
+        raise ValueError("Official real-wage extract does not cover every requested year")
+    if (frame.drop(columns="year") <= 0).any().any():
+        raise ValueError("Official real-wage values must be positive")
+    return frame
+
+
 def expected_raw_sources() -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     current_base = "https://ws.dgbas.gov.tw/001/Upload/463/relfile/11049/234856"
@@ -343,6 +361,7 @@ def expected_raw_sources() -> list[dict[str, object]]:
                 )
     rows.extend(
         [
+            dict(filename="official_real_wage_2000_2024.csv", url="https://earnings.dgbas.gov.tw/query_payroll.aspx", coverage="2000-2024", classification_version="official_published_2024_vintage", notes="official published annual real regular and total earnings query"),
             dict(filename="cpi_basic_classification.xml", url="https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/230555/pr0101a1m.xml", coverage="1981-latest", classification_version="not_applicable", notes="monthly all-items CPI"),
             dict(filename="dgbas_open_data_108.xml", url="https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/233528/Mp07014A108.xml", coverage="2019 release index", classification_version="10", notes="official open-data source index"),
             dict(filename="tsic_7_to_8_crosswalk.pdf", url="https://ws.dgbas.gov.tw/001/Upload/463/relfile/11195/90002/80f2bef2-0296-4ec3-896f-6490f2fa3f41.pdf", coverage="TSIC 7 to 8", classification_version="7-8", notes="official crosswalk"),

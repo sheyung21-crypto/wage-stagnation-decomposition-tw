@@ -15,6 +15,8 @@ prices:
   cpi_item_prefix: "總指數"
 decomposition:
   methods: [laspeyres, paasche, tornqvist]
+  chained_methods: [laspeyres, paasche]
+  chained_frequency: annual
   metrics:
     - regular_monthly
     - total_monthly
@@ -25,6 +27,29 @@ inference:
   block_length: 3
   replications: 10000
   seed: 20260809
+institutional_periods:
+  - [2000, 2002]
+  - [2002, 2009]
+  - [2009, 2017]
+  - [2017, 2020]
+  - [2020, 2022]
+  - [2022, 2024]
+conditional_predictions:
+  P1: {window: [2019, 2021], measure: endpoint_laspeyres_shift, direction: positive}
+  P2: {window: [2022, 2024], measure: endpoint_laspeyres_shift, direction: negative_reversal}
+  P3: {window: [2019, 2021], measure: monthly_hourly_growth_gap, direction: wider_during_2020_2021}
+total_wage_endpoint_sensitivity:
+  starts: [2000, 2008, 2016]
+  ends: [2022, 2023, 2024]
+  methods: [laspeyres, paasche, tornqvist]
+hours_mechanism:
+  reform_windows: [[2016, 2019], [2019, 2024]]
+  part_time_series_required_if_complete: true
+  allow_part_time_proxy: false
+official_comparison:
+  series: [real_regular_monthly, real_total_monthly]
+  gap_components: [common_sample_effect, coverage_effect, cpi_effect, residual]
+  residual_flag_share: 0.30
 validation:
   maximum_relative_error: 0.005
   identity_tolerance: 1.0e-10

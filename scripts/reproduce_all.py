@@ -20,14 +20,25 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from wagedecomp_tw.counterfactual import frozen_share_path
-from wagedecomp_tw.decomposition import decompose, nominal_then_deflate_bridge
-from wagedecomp_tw.inference import block_bootstrap_decomposition
+from wagedecomp_tw.decomposition import (
+    chained_decomposition,
+    covid_prediction_checks,
+    decompose,
+    hours_mechanism_table,
+    industry_contributions,
+    institutional_period_decompositions,
+    nominal_then_deflate_bridge,
+    official_comparison_table,
+    total_regular_industry_difference,
+)
+from wagedecomp_tw.inference import block_bootstrap_chained_paths, block_bootstrap_decomposition
 from wagedecomp_tw.ingest import (
     build_major_panel,
     build_middle_panel,
     build_source_manifest,
     build_vintage_major_panel,
     read_annual_cpi,
+    read_official_real_wage,
 )
 from wagedecomp_tw.panel import aggregate_wage, common_industry_path, enrich_panel
 from wagedecomp_tw.provenance import write_results_manifest
@@ -128,7 +139,13 @@ def aggregate_value(panel: pd.DataFrame, metric: str, year: int, common: set[str
     return float(np.average(rows[metric], weights=rows.employees))
 
 
-def main_tables(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame) -> dict[str, pd.DataFrame]:
+def main_tables(
+    major: pd.DataFrame,
+    vintage: pd.DataFrame,
+    middle: pd.DataFrame,
+    major_official: pd.DataFrame,
+    official_real: pd.DataFrame,
+) -> dict[str, pd.DataFrame]:
     tables: dict[str, pd.DataFrame] = {}
     main = [decompose(major, metric, 2000, 2024, method) for metric in REAL_METRICS for method in METHODS]
     bridge = nominal_then_deflate_bridge(major, "regular_monthly", 2000, 2024)
@@ -221,6 +238,115 @@ def main_tables(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame
         ignore_index=True,
     )
     tables["table_08_counterfactual.csv"] = counterfactual
+
+    chained_frames = []
+    for method in ("laspeyres", "paasche"):
+        chained = chained_decomposition(major, "real_regular_monthly", 2000, 2024, method)
+        bootstrap = block_bootstrap_chained_paths(
+            major,
+            "real_regular_monthly",
+            2000,
+            2024,
+            method=method,
+            replications=10000,
+            block_length=3,
+            seed=20260809,
+        )
+        for component in ("within", "shift", "interaction", "total"):
+            interval = bootstrap.loc[bootstrap.component.eq(component)].set_index("year")
+            for field in ("estimate_mean", "ci_lower", "ci_upper", "p_value_two_sided"):
+                chained[f"cumulative_{component}_bootstrap_{field}"] = chained.year.map(interval[field])
+        chained["valid_replications"] = 10000
+        chained["seed"] = 20260809
+        chained["block_length"] = 3
+        chained["total_ci_width_exceeds_abs_cumulative_change"] = (
+            chained.cumulative_total_bootstrap_ci_upper
+            - chained.cumulative_total_bootstrap_ci_lower
+        ) > chained.cumulative_total.abs()
+        chained_frames.append(chained)
+    chained_table = pd.concat(chained_frames, ignore_index=True)
+    tables["table_10_chained_decomposition.csv"] = chained_table
+
+    comparison_rows = []
+    endpoint_results = {
+        method: decompose(major, "real_regular_monthly", 2000, 2024, method)
+        for method in ("laspeyres", "paasche")
+    }
+    chained_results = {
+        method: chained_table.loc[chained_table.method.eq(method)].iloc[-1]
+        for method in ("laspeyres", "paasche")
+    }
+    endpoint_method_gap = abs(
+        float(endpoint_results["laspeyres"]["within"])
+        - float(endpoint_results["paasche"]["within"])
+    )
+    chained_method_gap = abs(
+        float(chained_results["laspeyres"].cumulative_within)
+        - float(chained_results["paasche"].cumulative_within)
+    )
+    for method in ("laspeyres", "paasche"):
+        endpoint = endpoint_results[method]
+        chained = chained_results[method]
+        row = {
+            "metric": "real_regular_monthly",
+            "start_year": 2000,
+            "end_year": 2024,
+            "method": method,
+            "scale": "2024_twd",
+            "endpoint_laspeyres_paasche_within_gap_2024_twd": endpoint_method_gap,
+            "chained_laspeyres_paasche_within_gap_2024_twd": chained_method_gap,
+            "method_gap_reduction_percent": (1.0 - chained_method_gap / endpoint_method_gap) * 100.0,
+        }
+        for component in ("within", "shift", "interaction", "total"):
+            endpoint_value = float(endpoint[component])
+            chained_value = float(chained[f"cumulative_{component}"])
+            row[f"endpoint_{component}"] = endpoint_value
+            row[f"chained_{component}"] = chained_value
+            row[f"chained_minus_endpoint_{component}"] = chained_value - endpoint_value
+        row["interaction_absolute_shrinkage_2024_twd"] = abs(float(endpoint["interaction"])) - abs(
+            float(chained.cumulative_interaction)
+        )
+        row["interaction_absolute_shrinkage_percent"] = (
+            1.0 - abs(float(chained.cumulative_interaction)) / abs(float(endpoint["interaction"]))
+        ) * 100.0
+        comparison_rows.append(row)
+    tables["table_11_chained_vs_endpoint.csv"] = pd.DataFrame(comparison_rows)
+
+    periods = [
+        (2000, 2002, "2000-2002", "WTO_accession_2002"),
+        (2002, 2009, "2002-2009", "post_global_financial_crisis_2009"),
+        (2009, 2017, "2009-2017", "one_fixed_day_off_first_stage_2017"),
+        (2017, 2020, "2017-2020", "covid_19_onset_2020"),
+        (2020, 2022, "2020-2022", "covid_19_to_reopening"),
+        (2022, 2024, "2022-2024", "post_covid_normalization"),
+    ]
+    tables["table_12_institutional_periods.csv"] = institutional_period_decompositions(
+        major, "real_regular_monthly", periods
+    )
+    tables["table_13_covid_predictions.csv"] = covid_prediction_checks(major)
+    tables["table_14_industry_contributions.csv"] = industry_contributions(
+        major, "real_regular_monthly", 2000, 2024
+    )
+
+    total_aggregate = pd.DataFrame(
+        [decompose(major, "real_total_monthly", 2000, 2024, method) for method in METHODS]
+    )
+    total_aggregate.insert(0, "row_type", "aggregate_total_wage")
+    total_industry_difference = total_regular_industry_difference(major, 2000, 2024)
+    tables["table_15_total_wage_decomposition.csv"] = pd.concat(
+        [total_aggregate, total_industry_difference], ignore_index=True, sort=False
+    )
+
+    total_sensitivity = []
+    for start in (2000, 2001, 2002):
+        for end in (2022, 2023, 2024):
+            for method in METHODS:
+                total_sensitivity.append(decompose(major, "real_total_monthly", start, end, method))
+    tables["table_16_total_wage_endpoint_sensitivity.csv"] = pd.DataFrame(total_sensitivity)
+    tables["table_17_hours_mechanism.csv"] = hours_mechanism_table(major)
+    tables["table_18_official_comparison.csv"] = official_comparison_table(
+        major, major_official, official_real
+    )
     return tables
 
 
@@ -303,12 +429,79 @@ def figures(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame, ta
     ax.legend(frameon=False, fontsize=8)
     save_figure(fig, "figure_06_counterfactual.pdf")
 
+    chained = tables["table_10_chained_decomposition.csv"]
+    chained = chained.loc[chained.method.eq("laspeyres")]
+    fig, axes = plt.subplots(2, 2, figsize=(7.2, 5.8), sharex=True)
+    for ax, component, title in zip(
+        axes.ravel(),
+        ("within", "shift", "interaction", "total"),
+        ("Within-industry", "Employment-share shift", "Interaction", "Total change"),
+    ):
+        estimate = chained[f"cumulative_{component}"].to_numpy(float)
+        lower = chained[f"cumulative_{component}_bootstrap_ci_lower"].to_numpy(float)
+        upper = chained[f"cumulative_{component}_bootstrap_ci_upper"].to_numpy(float)
+        ax.fill_between(chained.year, lower, upper, color="0.85", linewidth=0, label="95% block-bootstrap CI")
+        ax.plot(chained.year, estimate, color="0.15", linewidth=1.6, label="Observed cumulative path")
+        ax.axhline(0, color="0.6", linewidth=0.7)
+        ax.set_title(title, fontsize=9)
+        ax.set_ylabel("2024 TWD")
+    for ax in axes[-1]:
+        ax.set_xlabel("Year")
+    axes[0, 0].legend(frameon=False, fontsize=7)
+    save_figure(fig, "figure_07_chained_cumulative.pdf")
+
+    contributions = tables["table_14_industry_contributions.csv"].sort_values("within_2024_twd")
+    y = np.arange(len(contributions))
+    fig, ax = plt.subplots(figsize=(7.2, 5.2))
+    ax.barh(y - 0.18, contributions.within_2024_twd, height=0.36, color="0.25", label="Within")
+    ax.barh(y + 0.18, contributions.shift_2024_twd, height=0.36, color="0.7", label="Shift")
+    ax.axvline(0, color="0.5", linewidth=0.7)
+    ax.set_yticks(y, contributions.industry.str.replace("_", " "), fontsize=7)
+    ax.set_xlabel("Contribution (2024 TWD per month)")
+    ax.legend(frameon=False)
+    save_figure(fig, "figure_08_industry_contributions.pdf")
+
+    hours = tables["table_17_hours_mechanism.csv"]
+    industry_hours = hours.loc[hours.row_type.eq("annual_industry_path")]
+    aggregate_hours = hours.loc[hours.row_type.eq("annual_aggregate_path")]
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.8), sharex=True)
+    for industry in industry_hours.industry.dropna().unique():
+        data = industry_hours.loc[industry_hours.industry.eq(industry)]
+        axes[0].plot(data.year, data.normal_hours, color="0.78", linewidth=0.65)
+        axes[1].plot(data.year, data.overtime_hours, color="0.78", linewidth=0.65)
+    axes[0].plot(aggregate_hours.year, aggregate_hours.normal_hours, color="0.1", linewidth=1.8, label="Employment-weighted common sample")
+    axes[1].plot(aggregate_hours.year, aggregate_hours.overtime_hours, color="0.1", linewidth=1.8, label="Employment-weighted common sample")
+    for ax, ylabel in zip(axes, ("Normal hours per month", "Overtime hours per month")):
+        ax.axvline(2017, color="0.35", linestyle="--", linewidth=0.8)
+        ax.axvline(2018, color="0.55", linestyle=":", linewidth=0.8)
+        ax.set_ylabel(ylabel)
+        ax.legend(frameon=False, fontsize=7)
+    axes[1].set_xlabel("Year")
+    save_figure(fig, "figure_09_hours_by_industry.pdf")
+
+    official = tables["table_18_official_comparison.csv"]
+    official = official.loc[official.row_type.eq("annual_sequence")]
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.7), sharey=False)
+    for ax, composition, title in zip(axes, ("regular", "total"), ("Regular earnings", "Total earnings")):
+        data = official.loc[official.composition.eq(composition)].sort_values("year")
+        common_index = data.common_sample_real_2024_twd / data.common_sample_real_2024_twd.iloc[0] * 100.0
+        published_index = data.official_published_real_rebased_2024_twd / data.official_published_real_rebased_2024_twd.iloc[0] * 100.0
+        ax.plot(data.year, common_index, color="0.15", linewidth=1.7, label="Common-industry sample")
+        ax.plot(data.year, published_index, color="0.55", linestyle="--", linewidth=1.7, label="Official published real series")
+        ax.axhline(100, color="0.75", linewidth=0.7)
+        ax.set_title(title, fontsize=9)
+        ax.set_xlabel("Year")
+        ax.set_ylabel("Index (2000=100)")
+        ax.legend(frameon=False, fontsize=7)
+    save_figure(fig, "figure_10_official_comparison.pdf")
+
 
 def main() -> int:
     for directory in (INTERIM, TABLES, FIGURES, PAPER_FIGURES):
         directory.mkdir(parents=True, exist_ok=True)
     source_manifest = build_source_manifest(RAW, ROOT / "data" / "source_manifest.csv")
     cpi = read_annual_cpi(RAW / "cpi_basic_classification.xml")
+    official_real = read_official_real_wage(RAW / "official_real_wage_2000_2024.csv")
     major_raw, major_official = build_major_panel(RAW)
     vintage_raw, vintage_official = build_vintage_major_panel(RAW)
     middle_raw = build_middle_panel(RAW)
@@ -356,11 +549,14 @@ def main() -> int:
     validation = external_checks(major, major_official, vintage, vintage_official, middle)
     write_csv(validation, TABLES / "table_02_external_validation.csv")
 
-    tables = main_tables(major, vintage, middle)
+    tables = main_tables(major, vintage, middle, major_official, official_real)
     inference = block_bootstrap_decomposition(major, "real_regular_monthly", 2000, 2024)
     tables["table_09_inference.csv"] = inference
     for filename, frame in tables.items():
         write_csv(frame, TABLES / filename)
+    for path in FIGURES.glob("*"):
+        if path.is_file():
+            path.unlink()
     figures(major, vintage, middle, tables)
     write_results_manifest(ROOT / "results")
     paper_path = build_paper()

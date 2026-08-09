@@ -1,0 +1,4 @@
+﻿prediction_id,window,measure,predicted_direction,estimate,supported,gap_2019,gap_2020,gap_2021,prediction_status
+P1,2019-2021,endpoint_laspeyres_shift_2024_twd,positive,137.1553604714,True,,,,conditional_ex_ante_researcher_had_seen_full_period_endpoint_results
+P2,2022-2024,endpoint_laspeyres_shift_2024_twd,negative_reversal,-14.6920421953,True,,,,conditional_ex_ante_researcher_had_seen_full_period_endpoint_results
+P3,2019-2021,monthly_hourly_growth_gap_change_percentage_points,wider_during_2020_2021,1.5112484959,True,10.6789039304,10.6890703564,12.1901524263,conditional_ex_ante_researcher_had_seen_full_period_endpoint_results
