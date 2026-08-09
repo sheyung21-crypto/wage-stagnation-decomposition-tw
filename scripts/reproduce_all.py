@@ -501,7 +501,7 @@ def main() -> int:
         directory.mkdir(parents=True, exist_ok=True)
     source_manifest = build_source_manifest(RAW, ROOT / "data" / "source_manifest.csv")
     cpi = read_annual_cpi(RAW / "cpi_basic_classification.xml")
-    official_real = read_official_real_wage(RAW / "official_real_wage_2000_2024.csv")
+    official_real = read_official_real_wage(RAW / "official_real_wage_series.csv")
     major_raw, major_official = build_major_panel(RAW)
     vintage_raw, vintage_official = build_vintage_major_panel(RAW)
     middle_raw = build_middle_panel(RAW)
