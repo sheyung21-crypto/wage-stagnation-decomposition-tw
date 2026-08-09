@@ -1,4 +1,12 @@
 ﻿notes,classification_version,files,bytes,first_coverage
+DGBAS National Accounts Yearbook documentation and definitions,SNA 2008; TSIC 11,1,5639456,national accounts through 2024
+"DGBAS SDMX annual nominal output, chain-volume output, and output deflators by industry",SNA 2008; TSIC 11,1,28489,2000-2024
+DGBAS SDMX annual nominal value added and employee compensation by industry,SNA 2008; TSIC 11,1,18331,2000-2024
+DGBAS SDMX metadata for domestic production and factor income,SNA 2008; TSIC 11,1,6300,series metadata
+DGBAS Statistical Abstract of National Accounts documentation,SNA 2008; TSIC 11,1,2098870,national accounts through May 2026 release
+DGBAS manufacturing production-volume-per-hour productivity index used for dissemination cross-check,official manufacturing series; 2021=100,1,5689,2000-2024
+MOL major economic indicators: year-end monthly minimum wage and manufacturing productivity index,not_applicable,1,13459,1996-2025; analysis uses 2000-2024
+MOL year-end migrant-worker stock by work responsibility; 2015 onward industry split uses valid permits,MOL work-responsibility categories; TSIC revisions not used,1,7054,1996-2024; analysis uses 2000-2024
 major-industry annual table,10,4,155169,2000-2019
 major-industry annual table,11,4,184768,2005-2024
 middle-industry annual table,10,210,2880820,2016

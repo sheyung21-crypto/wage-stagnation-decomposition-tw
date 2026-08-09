@@ -18,7 +18,11 @@
       "15": "results/tables/table_15_total_wage_decomposition.csv",
       "16": "results/tables/table_16_total_wage_endpoint_sensitivity.csv",
       "17": "results/tables/table_17_hours_mechanism.csv",
-      "18": "results/tables/table_18_official_comparison.csv"
+      "18": "results/tables/table_18_official_comparison.csv",
+      "19": "results/tables/table_19_migrant_trends_validation.csv",
+      "20": "results/tables/table_20_migrant_hypothetical_bounds.csv",
+      "21": "results/tables/table_21_productivity_decomposition.csv",
+      "22": "results/tables/table_22_productivity_validation.csv"
     },
     "figures": {
       "1": "results/figures/figure_01_real_monthly_hourly.pdf",
@@ -30,7 +34,10 @@
       "7": "results/figures/figure_07_chained_cumulative.pdf",
       "8": "results/figures/figure_08_industry_contributions.pdf",
       "9": "results/figures/figure_09_hours_by_industry.pdf",
-      "10": "results/figures/figure_10_official_comparison.pdf"
+      "10": "results/figures/figure_10_official_comparison.pdf",
+      "11": "results/figures/figure_11_migrant_shares_wages.pdf",
+      "12": "results/figures/figure_12_migrant_hypothetical_bounds.pdf",
+      "13": "results/figures/figure_13_productivity_wage_gap.pdf"
     }
   },
   "files": [
@@ -66,8 +73,8 @@
     },
     {
       "path": "results/figures/figure_07_chained_cumulative.pdf",
-      "bytes": 16645,
-      "sha256": "83676b7a37d52e32d63b96dac0cfec9dbb0012d80ed6b2a0972d4cb713d3ba79"
+      "bytes": 16296,
+      "sha256": "9dcdcb6558e0871c139b4fee870a24474b403af922863f66d71388c15d22fe4e"
     },
     {
       "path": "results/figures/figure_08_industry_contributions.pdf",
@@ -85,9 +92,24 @@
       "sha256": "0278b968587437ddff274dcbb938fde18048e79974c3935351fe62de5319ba98"
     },
     {
+      "path": "results/figures/figure_11_migrant_shares_wages.pdf",
+      "bytes": 15488,
+      "sha256": "e9ffffca15197d22d0bf59dcb2a07896cd41e1d2d4b5b42cd6b6baa80d516970"
+    },
+    {
+      "path": "results/figures/figure_12_migrant_hypothetical_bounds.pdf",
+      "bytes": 14074,
+      "sha256": "a9e185439c038bb00c4885002b192d42a004f05c77e66a822cb2d32395c0c7d4"
+    },
+    {
+      "path": "results/figures/figure_13_productivity_wage_gap.pdf",
+      "bytes": 18291,
+      "sha256": "b7d1f9e0bc9392873e27576837ffc57ca61ca620fea02cec42cfc3f4e3ebd50a"
+    },
+    {
       "path": "results/tables/table_01_data_sources.csv",
-      "bytes": 877,
-      "sha256": "c38c5ee4e1147ba334a0f8994938e1b69fb7a9b5f4277753f6262a851950167b"
+      "bytes": 1993,
+      "sha256": "c1d88ebb6f54febd0205469d8fea9ac204b7b43b41e404566385467ffac2221a"
     },
     {
       "path": "results/tables/table_02_external_validation.csv",
@@ -146,8 +168,8 @@
     },
     {
       "path": "results/tables/table_13_covid_predictions.csv",
-      "bytes": 637,
-      "sha256": "122eeaa10ec0c2123517754f25c95a8f48c77e55307b10d5d6182c89d1536e9a"
+      "bytes": 1108,
+      "sha256": "9a7377d1489eb2f931b7cc574146f292d9860f0fdc8c9d3b0ce84cfda33dbe95"
     },
     {
       "path": "results/tables/table_14_industry_contributions.csv",
@@ -173,6 +195,26 @@
       "path": "results/tables/table_18_official_comparison.csv",
       "bytes": 9200,
       "sha256": "7080ebf8606bed7af78115823505e934c9fedfc438aeb1d0842cb0b3375d046c"
+    },
+    {
+      "path": "results/tables/table_19_migrant_trends_validation.csv",
+      "bytes": 27705,
+      "sha256": "8b93e2ca43f4a8c1f3a27bc5cb281e0fa254cb9a7f19bf109a0e9fe79ad597e5"
+    },
+    {
+      "path": "results/tables/table_20_migrant_hypothetical_bounds.csv",
+      "bytes": 11026,
+      "sha256": "1c5339a00aa626ccfc3e7ad946e43031dea8d4d427566df3072a2d1692ac1ed9"
+    },
+    {
+      "path": "results/tables/table_21_productivity_decomposition.csv",
+      "bytes": 28704,
+      "sha256": "6c5c5144996745b9ad12d36b316304f3a3d3e2da3a694b791c8f155ec90fa26a"
+    },
+    {
+      "path": "results/tables/table_22_productivity_validation.csv",
+      "bytes": 15985,
+      "sha256": "06ee75509e6f3e6cda7068444918a875e096b76684d679acb5ab4e9bc8bbe144"
     }
   ]
 }

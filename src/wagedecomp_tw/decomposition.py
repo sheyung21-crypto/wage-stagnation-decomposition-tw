@@ -157,6 +157,12 @@ def covid_prediction_checks(panel: pd.DataFrame) -> pd.DataFrame:
     """Evaluate the three conditional predictions recorded before Phase 2 calculation."""
     first = decompose(panel, "real_regular_monthly", 2019, 2021, "laspeyres")
     second = decompose(panel, "real_regular_monthly", 2022, 2024, "laspeyres")
+
+    def component_reference(result: dict[str, float | int | str]) -> float:
+        return max(abs(float(result[key])) for key in ("within", "interaction", "total"))
+
+    first_reference = component_reference(first)
+    second_reference = component_reference(second)
     common = set(panel.loc[panel.year.eq(2000), "industry"]) & set(
         panel.loc[panel.year.eq(2024), "industry"]
     )
@@ -183,6 +189,9 @@ def covid_prediction_checks(panel: pd.DataFrame) -> pd.DataFrame:
             "predicted_direction": "positive",
             "estimate": float(first["shift"]),
             "supported": bool(first["shift"] > 0),
+            "magnitude_reference": first_reference,
+            "estimate_percent_of_reference": abs(float(first["shift"])) / first_reference * 100.0,
+            "magnitude_interpretation": "positive_but_small_relative_to_largest_contemporaneous_component",
         },
         {
             "prediction_id": "P2",
@@ -191,6 +200,9 @@ def covid_prediction_checks(panel: pd.DataFrame) -> pd.DataFrame:
             "predicted_direction": "negative_reversal",
             "estimate": float(second["shift"]),
             "supported": bool(second["shift"] < 0),
+            "magnitude_reference": second_reference,
+            "estimate_percent_of_reference": abs(float(second["shift"])) / second_reference * 100.0,
+            "magnitude_interpretation": "direction_matches_but_magnitude_is_substantively_indistinguishable_from_zero",
         },
         {
             "prediction_id": "P3",
@@ -202,6 +214,10 @@ def covid_prediction_checks(panel: pd.DataFrame) -> pd.DataFrame:
             "gap_2019": gaps[2019],
             "gap_2020": gaps[2020],
             "gap_2021": gaps[2021],
+            "gap_change_2020": gaps[2020] - gaps[2019],
+            "gap_change_2021": gaps[2021] - gaps[2020],
+            "estimate_percent_in_2020": (gaps[2020] - gaps[2019]) / (gaps[2021] - gaps[2019]) * 100.0,
+            "magnitude_interpretation": "direction_matches_but_2020_change_is_substantively_zero_and_widening_is_concentrated_in_2021",
         },
     ]
     result = pd.DataFrame(records)

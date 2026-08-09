@@ -31,6 +31,10 @@ EXPECTED_TABLES = {
     "table_16_total_wage_endpoint_sensitivity.csv",
     "table_17_hours_mechanism.csv",
     "table_18_official_comparison.csv",
+    "table_19_migrant_trends_validation.csv",
+    "table_20_migrant_hypothetical_bounds.csv",
+    "table_21_productivity_decomposition.csv",
+    "table_22_productivity_validation.csv",
 }
 EXPECTED_FIGURES = {
     "figure_01_real_monthly_hourly.pdf",
@@ -43,16 +47,19 @@ EXPECTED_FIGURES = {
     "figure_08_industry_contributions.pdf",
     "figure_09_hours_by_industry.pdf",
     "figure_10_official_comparison.pdf",
+    "figure_11_migrant_shares_wages.pdf",
+    "figure_12_migrant_hypothetical_bounds.pdf",
+    "figure_13_productivity_wage_gap.pdf",
 }
 
 
-def test_phase2_output_inventory_and_manifest_hashes() -> None:
+def test_phase3_output_inventory_and_manifest_hashes() -> None:
     assert {path.name for path in TABLES.glob("*.csv")} == EXPECTED_TABLES
     assert {path.name for path in FIGURES.glob("*.pdf")} == EXPECTED_FIGURES
 
     manifest = json.loads((ROOT / "results" / "results_manifest.json").read_text(encoding="utf-8"))
-    assert set(manifest["paper_number_mapping"]["tables"]) == {str(i) for i in range(1, 19)}
-    assert set(manifest["paper_number_mapping"]["figures"]) == {str(i) for i in range(1, 11)}
+    assert set(manifest["paper_number_mapping"]["tables"]) == {str(i) for i in range(1, 23)}
+    assert set(manifest["paper_number_mapping"]["figures"]) == {str(i) for i in range(1, 14)}
     for item in manifest["files"]:
         path = ROOT / item["path"]
         assert path.stat().st_size == item["bytes"]
@@ -95,3 +102,23 @@ def test_total_wage_has_nine_endpoint_pairs_and_three_methods() -> None:
     assert frame[["start_year", "end_year"]].drop_duplicates().shape[0] == 9
     assert set(frame["method"]) == {"laspeyres", "paasche", "tornqvist"}
     assert len(frame) == 27
+
+
+def test_phase3_bounds_productivity_and_single_figure_location() -> None:
+    bounds = pd.read_csv(TABLES / "table_20_migrant_hypothetical_bounds.csv")
+    endpoint = bounds.loc[bounds.row_type.eq("endpoint_contribution_bounds")].iloc[0]
+    assert endpoint.identified_status == "hypothetical bounds; no point estimate"
+    assert endpoint.composition_removed_within_contribution_lower_2024_twd <= endpoint.composition_removed_within_contribution_upper_2024_twd
+    assert endpoint.composition_adjustment_lower_2024_twd > 0
+    assert "midpoint" not in " ".join(bounds.columns).lower()
+
+    productivity = pd.read_csv(TABLES / "table_21_productivity_decomposition.csv")
+    endpoint_productivity = productivity.loc[productivity.row_type.eq("endpoint_2000_2024")]
+    assert endpoint_productivity.identity_residual.abs().max() < 1e-10
+
+    validation = pd.read_csv(TABLES / "table_22_productivity_validation.csv")
+    gated = validation.loc[
+        validation.row_type.eq("validation_summary") & validation.threshold.notna()
+    ]
+    assert gated.passed.astype(str).str.lower().eq("true").all()
+    assert not list((ROOT / "paper" / "figures").glob("*.pdf"))

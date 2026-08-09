@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+/.venv/
 data/interim/python_packages/
 data/interim/artifact_tool_check/
 data/interim/pdf_render/
@@ -12,3 +13,4 @@ paper/*.out
 paper/*.toc
 paper/*.xdv
 paper/main.pdf
+paper/figures/

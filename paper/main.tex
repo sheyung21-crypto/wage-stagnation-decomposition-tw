@@ -21,6 +21,20 @@
 \newcommand{\OfficialTotalGrowth}{10.26}
 \newcommand{\RegularOfficialGap}{-0.66}
 \newcommand{\TotalOfficialGap}{-0.84}
+\newcommand{\MigrantShareStart}{7.40}
+\newcommand{\MigrantShareEnd}{16.03}
+\newcommand{\MigrantWithinLower}{1867}
+\newcommand{\MigrantWithinUpper}{2188}
+\newcommand{\MigrantAdjustmentLower}{355}
+\newcommand{\MigrantAdjustmentUpper}{676}
+\newcommand{\CommonCompGrowth}{39.48}
+\newcommand{\CommonProductivityGrowth}{68.22}
+\newcommand{\CommonLaborShareGrowth}{-6.97}
+\newcommand{\CommonPriceWedge}{21.77}
+\newcommand{\MfgCompGrowth}{67.27}
+\newcommand{\MfgProductivityGrowth}{143.98}
+\newcommand{\MfgLaborShareGrowth}{-27.08}
+\newcommand{\MfgPriceWedge}{49.63}
 
 \begin{document}
 
@@ -30,19 +44,19 @@
 \wpdate{2026 年 8 月 9 日}
 
 \begin{wpabstract}
-本文以行政院主計總處二○○○至二○二四年工業及服務業資料，將共同十六行業的實質平均薪資變動分為產業內、就業占比移轉與交乘項。實質經常性月薪對數成長僅 \MainGrowth\%，時薪成長則為 \HourlyGrowth\%，差距達 \HoursGap 個百分點。端點 Laspeyres 分解的月薪增加額為新臺幣 \MainTotal 元，其中產業內為 \MainWithin 元、移轉為 \MainShift 元、交乘為 \MainInteraction 元；端點交乘在 Paasche 下改為正值，顯示基期選擇敏感。逐年連鎖後，產業內、移轉與交乘累積額分別為 \ChainWithin、\ChainShift 與 \ChainInteraction 元，交乘絕對值及兩方法的產業內差距均縮減 \InteractionShrink\%。三年循環區塊自助法的一萬次抽樣顯示，二○二四年累積總變動的百分之九十五區間為負三八三○至八五一五元，區間寬度大於觀察變動；端點產業內區間亦跨零，移轉雙尾值為零點九五八，故不得賦予傳統推論意義。研究者看過全期端點後提出的三項條件式事前預測均獲資料支持：二○一九至二○二一年移轉為正、二○二二至二○二四年反轉為負，月薪與時薪成長差在疫情前兩年擴大。六個制度分段的年均變動正負交替，端點與連鎖合計相同而配置略異，因此事件年份只作描述邊界，不視為政策斷點。固定二○○○年占比的二○二四年反事實薪資高四一八元，與負向淨移轉一致。產業內成長高度集中，前三大行業占絕對貢獻 \IndustryTopThree\%；總薪資成長 \TotalGrowth\%，快於經常性薪資。官方發布實質序列的經常性與總薪資成長為 \OfficialRegularGrowth\% 與 \OfficialTotalGrowth\%，和共同樣本相差 \RegularOfficialGap 與 \TotalOfficialGap 個百分點，幾乎全由共同樣本界定解釋。部分工時人數無全期一致序列，故不設代理變數。全部結果是可重現的描述性會計，不識別制度或產業結構的因果效果。
+本文以行政院主計總處二○○○至二○二四年工業及服務業共同十六行業資料，將實質平均薪資變動分為產業內、就業占比移轉與交乘項。實質經常性月薪對數成長 \MainGrowth\%，時薪成長 \HourlyGrowth\%，相差 \HoursGap 點。端點 Laspeyres 的月薪增加 \MainTotal 元，產業內為 \MainWithin 元、移轉 \MainShift 元、交乘 \MainInteraction 元；Paasche 的交乘符號相反。年度連鎖後三項為 \ChainWithin、\ChainShift 與 \ChainInteraction 元，交乘及方法差縮小 \InteractionShrink\%。一萬次三年循環區塊重抽的二○二四年總變動百分之九十五路徑重抽區間（非抽樣設計信賴區間）為負三八三○至八五一五元，寬於觀察變動。研究者看過全期端點後提出的三項條件式預測雖符合方向，但其中負十四點六九元及二○二○年的零點零一點與零難分，實質擴大集中於二○二一年。事後假設性界限顯示製造業移工占比由 \MigrantShareStart\% 升至 \MigrantShareEnd\%；若移工經常性薪資介於基本工資與本國籍薪資八成，移除組成後的製造業產業內貢獻為 \MigrantWithinLower--\MigrantWithinUpper 元，而非點估計。跨來源檢查顯示三個直接對應產業占產業移工總數九成六以上，所有占比低於百分之五十停止門檻；但年底分子與全年平均分母的時點差仍保留。另一事後會計把製造業實質受僱人員報酬時薪成長 \MfgCompGrowth 點拆為生產力 \MfgProductivityGrowth 點、受僱人員報酬份額 \MfgLaborShareGrowth 點與價格楔子 \MfgPriceWedge 點；它與薪資調查口徑不同，不可互推。官方重複發布的生產力值完全一致，平減指數重算誤差低於百分之零點零一，會計殘差小於十的負十次方。即使採界限端點並承認路徑區間寬廣，最壞情況下仍成立的結論是：淨產業間移轉不是長期實質薪資成長的主要正向來源，全部結果均屬描述性會計而非因果識別。
 \end{wpabstract}
 
-\keywords{實質薪資；shift-share；產業結構；工作時數；台灣}
-\jel{J31；J21；C43}
+\keywords{實質薪資；shift-share；產業結構；工作時數；外籍移工；勞動生產力}
+\jel{J31；J21；E24；O47}
 
 \section{緒論}
 
 台灣薪資停滯的公共討論常把兩個機制混在一起：一是各產業內部的薪資成長偏慢，二是受僱員工逐漸移往不同薪資水準的產業。兩者的政策含義不同。若前者為主，問題較接近廣泛的生產力、議價、報酬分配與價格調整；若後者重要，產業組成、職務配置與部門移動便更關鍵。然而總體平均薪資同時受產業薪資與就業權數變動影響，僅比較總體序列無法區分兩者。
 
-本文建立一套可完全重現的描述性分解。第一，使用官方受僱員工人數作權數，對實質經常性薪資與總薪資同時執行 Laspeyres、Paasche 與 Törnqvist 分解，完整保留交乘或近似殘差。第二，將月薪除以一致的正常或總工時，量化月薪與時薪成長差。第三，在同一發布版次內比較大類與中類，避免把官方後續修訂誤認為分類粒度效果。第四，建立固定期初受僱人數占比的反事實路徑。第五，用跨年的共同區塊 bootstrap 描述分量對時間抽樣的敏感度。
+本文建立一套可完全重現的描述性分解。第一，使用官方受僱員工人數作權數，對實質經常性薪資與總薪資同時執行 Laspeyres、Paasche 與 Törnqvist 分解，完整保留交乘或近似殘差。第二，將月薪除以一致的正常或總工時，量化月薪與時薪成長差。第三，在同一發布版次內比較大類與中類，避免把官方後續修訂誤認為分類粒度效果。第四，建立固定期初受僱人數占比的反事實路徑。第五，用跨年的共同區塊重抽描述分量對時間路徑排列的敏感度。主結果完成後，修訂 3 另加入兩個事後防守性檢查：以明示假設界定製造業移工組成範圍，並以國民所得資料拆解生產力、受僱人員報酬份額與價格楔子。
 
-主要發現有三點。其一，2000--2024 年共同樣本的實質經常性月薪只增加 \MainGrowth\%，但時薪增加 \HourlyGrowth\%；工作時數變動是兩種衡量差距的重要會計來源。其二，不論基期公式，產業內薪資變動遠大於純結構移轉；結構分量的符號與交乘分配會隨基期而改變，故不應只報單一版本。其三，中類化確實改變各分量，但不支持「分類愈細，產業內分量必然愈小」的單調敘事。
+主要發現有五點。其一，2000--2024 年共同樣本的實質經常性月薪只增加 \MainGrowth\%，但時薪增加 \HourlyGrowth\%；工作時數變動是兩種衡量差距的重要會計來源。其二，不論基期公式，產業內薪資變動遠大於純結構移轉；結構分量的符號與交乘分配會隨基期而改變，故不應只報單一版本。其三，中類化確實改變各分量，但不支持「分類愈細，產業內分量必然愈小」的單調敘事。其四，製造業移工占比上升在兩個假設情境下會使本國籍薪資成長被總平均低估，但只可報範圍。其五，製造業每工時附加價值成長遠快於實質受僱人員報酬時薪；受僱人員報酬份額與價格楔子均為負向配置項，但不構成因果機制證據。
 
 本文的貢獻不在因果識別，而在證據邊界：同時固定資料版本、涵蓋範圍、價格基期、分類接縫與會計公式，讓「結構」一詞只承擔資料可支持的含義。所有下載網址、SHA-256、排除紀錄、結果表與論文數字均由公開 repository 中的固定腳本產生。
 
@@ -66,10 +80,13 @@
 歷年各業正常、總工時 & 2000--2024 & 經常性、總時薪 & 同上 \\
 逐年中類年報表 & 2016--2024 & 粒度比較 & 修訂內分段 \\
 消費者物價總指數 & 2000--2024 & 轉為 2024 年價格 & 2024=100 \\
+勞動部移工人數與基本工資 & 2000--2024 & 移工占比與假設性界限 & 工作內容大類／不適用 \\
+國民所得分業產出與受僱人員報酬 & 2000--2024 & 生產力--報酬會計 & SNA 2008、第 11 次分類 \\
+製造業官方勞動生產力指數 & 2000--2024 & 外部發布一致性檢查 & 2021=100 \\
 \bottomrule
 \end{tabularx}
 \begin{tabnote}
-原始來源共 424 筆，每筆的網址、取得日、位元組數、SHA-256、涵蓋期與分類版本記錄於 \ttt{data/source\_manifest.csv}。
+原始來源共 433 筆，每筆的網址、取得日、位元組數、SHA-256、涵蓋期與分類版本記錄於 \ttt{data/source\_manifest.csv}。新增來源均在修訂 3 提交後取得。
 \end{tabnote}
 \end{table}
 
@@ -94,6 +111,18 @@ e_t=\frac{|\widehat W_t-W_t^{\mathrm{official}}|}{|W_t^{\mathrm{official}}|}.
 除行業表自行加權的共同樣本外，本文另從主計總處「薪情平臺」擷取同一薪資調查發布的每人每月實質經常性與實質總薪資年序列\citep{dgbas-platform}。平台顯示的 2000--2024 年序列採官方發布時的消費者物價指數基準；為比較水準，圖中依 2024 年名目薪資等比例換算成 2024 年幣值，但成長率不受這項等比例換算影響。這個外部序列與共同 16 行業加權值不是同一估計量：前者涵蓋官方當年發布範圍，後者刻意固定在全期皆可觀測的行業集合。
 
 薪情平臺也列有「部分工時員工」篩選項。本文實際查詢 2000--2024 年年度受僱人數，結果沒有全期一致的可用值。因此，部分工時比率不進入實證表，也不以住宿餐飲業占比或低工時行業占比代替。這個決定避免把產業結構代理誤寫成僱用型態機制；可用性查核與未納入理由完整保留於結果表 17。
+
+\subsection{外籍移工的涵蓋查證}
+
+在進行任何移工計算前，本文先查證受僱員工薪資調查母體。主計總處新聞稿明列「全體受僱員工」包含本國籍、外國籍全時員工及部分工時員工，另行發布的「本國籍全時受僱員工」才排除外國籍與部分工時\citep{dgbas-employee-scope}。因此本文採取預先指定的「明確涵蓋」分支：製造業平均經常性薪資可能受到移工占比變化的機械性組成影響，但這項文件證據不表示可以從總平均識別本國籍或移工個別薪資。
+
+移工分子來自勞動部《勞動統計年報》表 13-2 的年底在臺人數，按工作內容分為製造、營建、廢棄物處理與農林漁牧等；2015 年起分業欄是有效聘僱許可人數\citep{mol-yearbook}。薪資調查分母則是主計總處全年平均受僱員工人數，故占比明確保留「年底存量／全年平均」的時點不一致，不能當成同一日的精確比例。製造、營建與廢棄物處理可直接對應三個薪資大類；三業合計占勞動部產業移工總數的對應率由 2000 年 99.46\% 變為 2024 年 96.27\%，未對應者主要為薪資調查母體外的農林漁牧業。結果表 19 同時保留分子、分母、時點與對應率；所有行業--年份占比均低於 50\%，最大值是 2024 年製造業 16.03\%，因此通過第二部分的停止閘門。
+
+\subsection{生產力與國民所得資料的一致性檢查}
+
+生產力補充使用主計總處國民所得統計資料庫的分業當期價格附加價值、連鎖實質附加價值、受僱人員報酬與產出平減指數\citep{dgbas-national-accounts}，工時則沿用薪資調查的分業受僱員工總工時。本文分別建構製造業直接序列與共同 16 行業合計；後者的連鎖實質分業水準嚴格而言不具可加總性，故只作明示範圍的描述性近似。受僱人員報酬份額定義為受僱人員報酬除以名目附加價值，不含自僱者混合所得的設算勞動報酬。CPI 與產出平減指數先各自重標為 2024=100，再形成相對價格楔子。
+
+結果表 22 設三層檢查。第一，同一官方製造業勞動生產力指數在主計總處活頁簿與勞動部年報的最大相對誤差為零。第二，以名目除以連鎖實質產出重算製造業平減指數，最大相對誤差為 0.0052\%，低於 0.05\% 門檻。第三，逐年及端點的生產力--報酬會計殘差絕對值小於 $10^{-10}$。另將國民所得的附加價值／工時與官方「生產量／工時」指數並列時，最大差 33.98\%；兩者分子概念不同，故此差異被報告而不設通過門檻，也不把其中一條序列冒充另一條。
 
 \section{方法}
 
@@ -127,7 +156,7 @@ W_t-W_{t-1}=\sum_i s_{i,t-1}\Delta w_{it}
 \]
 而累積產業內、移轉與交乘項分別把 2001 年至 $t$ 年的年度連結相加。Paasche 連結改用當期權數與當期薪資，交乘項符號反向。每一年與每個累積端點都直接檢查三分量之和等於 $W_t-W_0$，絕對與相對容許誤差均為 $10^{-10}$。如果年度變動幅度較小，交乘項以及 Laspeyres--Paasche 配置差異應比端點分解縮小；這是一項方法診斷，不是經濟機制的先驗限制。
 
-連鎖路徑的區間仍採三年循環移動區塊 bootstrap：從 24 組年度對數差分抽取連續區塊，循環到序列開頭，重建每個行業的受僱人數與實質薪資路徑，再對每個累積年度重新分解。重複 10,000 次，亂數種子固定為 20260809。圖中的陰影是各累積分量逐年的百分位數區間；若區間寬度大於觀察到的累積變動，圖說直接標示該路徑與零不可區分。
+連鎖路徑的區間仍採三年循環移動區塊重抽（block bootstrap）：從 24 組年度對數差分抽取連續區塊，循環到序列開頭，重建每個行業的受僱人數與實質薪資路徑，再對每個累積年度重新分解。重複 10,000 次，亂數種子固定為 20260809。圖中的陰影是各累積分量逐年的百分位數逐點區間，不是同時信賴帶；若區間寬度大於觀察到的累積變動，圖說直接標示該路徑與零不可區分。
 
 \subsection{制度分段與條件式事前預測}
 
@@ -145,11 +174,28 @@ W_t^{cf}=\sum_i s_{i0}w_{it}.
 \]
 本文分別固定 2000、2008 與 2016 年占比。月薪與時薪的會計差以累積對數成長差表示。先分解再平減的敏感度則把名目分解分量以期末價格尺度轉換，並把共同 CPI 變動另列為價格橋接項。
 
+\subsection{事後分析：移工界限與生產力--報酬會計}
+
+下列兩項補充均在主結果已知後才決定，並在下載新資料前寫入 \ttt{PREANALYSIS.md} 修訂 3。第一項把製造業平均薪資寫成
+\[
+w_t=(1-m_t)w_t^{N}+m_tw_t^{M},
+\]
+其中 $m_t$ 是移工占比，$w_t^N$ 與 $w_t^M$ 分別是本國籍與移工經常性薪資。個別群體薪資均不可觀察，故本文不產生點估計，只在兩個明示情境下反解 $w_t^N$：其一令 $w_t^M$ 等於當年年底月基本工資，其二令 $w_t^M=0.8w_t^N$。每年取兩個情境結果的較小與較大值為區間，再以 2000 年製造業基期就業占比換算「移除移工組成後」的製造業產業內貢獻範圍。基本工資情境之所以具有資訊性，是經常性薪資不含加班費與非按月獎金；但它仍是情境端點，不是移工實際平均經常性薪資的估計。
+
+第二項依 Feldstein（2008）與 Stansbury and Summers（2018）強調的口徑區分\citep{feldstein2008,stansbury-summers2018}，將國民所得的每工時受僱人員報酬以 CPI 平減。令 $Y/H$ 為每工時連鎖實質附加價值，$\alpha$ 為受僱人員報酬占名目附加價值比，$P_Y$ 為產出平減指數，則精確對數會計為
+\[
+\Delta\log\!\left(\frac{C/H}{\mathrm{CPI}}\right)
+=\Delta\log\!\left(\frac{Y}{H}\right)
++\Delta\log(\alpha)
+-\Delta\log\!\left(\frac{\mathrm{CPI}}{P_Y}\right).
+\]
+左側是國民所得口徑的實質受僱人員報酬時薪，包含雇主社會提撥等非薪資報酬；它不是薪資調查的實質經常性時薪。本文只把兩條指數並列以顯示口徑差，不以其中一條推導另一條，也不把勞動份額或價格楔子的變動解讀為已識別原因。
+
 \subsection{不確定性}
 
-本文區分三種不確定性。第一是\textbf{時間路徑變異}：以長度三年的循環移動區塊 bootstrap 衡量年度差分重新排列後的分解敏感度。為保留正值，重抽的是就業與薪資的年度對數一階差分；所有產業共同抽取同一批年份區塊，以保留同期共變動。重複 10,000 次，亂數種子固定為 20260809。第二是\textbf{官方抽樣誤差}：原始發布表沒有逐業共變異矩陣，本文不能重建官方抽樣設計的標準誤。第三是\textbf{規格與涵蓋不確定性}：包括分類版本、共同樣本、端點、薪資口徑、CPI 基準與分解權數，本文用明列的敏感度規格而非單一區間處理。
+本文區分三種不確定性。第一是\textbf{時間路徑變異}：以長度三年的循環移動區塊重抽衡量年度差分重新排列後的分解敏感度。為保留正值，重抽的是就業與薪資的年度對數一階差分；所有產業共同抽取同一批年份區塊，以保留同期共變動。重複 10,000 次，亂數種子固定為 20260809。第二是\textbf{官方抽樣誤差}：原始發布表沒有逐業共變異矩陣，本文不能重建官方抽樣設計的標準誤。第三是\textbf{規格與涵蓋不確定性}：包括分類版本、共同樣本、端點、薪資口徑、CPI 基準與分解權數，本文用明列的敏感度規格而非單一區間處理。
 
-因此，bootstrap 陰影只回答「若觀察到的年度路徑是可重抽的時間序列，累積會計分量多敏感」，不回答母體參數、抽樣設計或制度效果的不確定性。本文仍報告雙尾比例作描述，但不把它稱為傳統假設檢定；區間跨零只表示此重抽設計下與零不可區分。
+因此，區塊重抽陰影只回答「若觀察到的年度路徑是可重抽的時間序列，累積會計分量多敏感」，不回答母體參數、抽樣設計或制度效果的不確定性。本文把 $r_2=\min\{1,2\min[\widehat P^*(T^*\leq0),\widehat P^*(T^*\geq0)]\}$ 稱為「雙尾重抽比例」；它只描述重抽分布位於零兩側的比例，不是傳統假設檢定的 $p$ 值。區間跨零只表示此重抽設計下與零不可區分。
 
 \section{結果}
 
@@ -159,7 +205,7 @@ W_t^{cf}=\sum_i s_{i0}w_{it}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/figure_01_real_monthly_hourly.pdf}
+\includegraphics[width=0.92\textwidth]{../results/figures/figure_01_real_monthly_hourly.pdf}
 \caption{實質經常性月薪與時薪（共同樣本）}
 \label{fig:monthly-hourly}
 \begin{tabnote}[0.92\textwidth]
@@ -171,7 +217,7 @@ W_t^{cf}=\sum_i s_{i0}w_{it}.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/figure_02_regular_total.pdf}
+\includegraphics[width=0.92\textwidth]{../results/figures/figure_02_regular_total.pdf}
 \caption{實質經常性薪資與總薪資（共同樣本）}
 \label{fig:regular-total}
 \end{figure}
@@ -202,7 +248,7 @@ Törnqvist（對數百分點） & 5.094 & $-0.041$ & 0 & $-0.441$ & 4.611 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{figures/figure_04_decomposition_methods.pdf}
+\includegraphics[width=0.88\textwidth]{../results/figures/figure_04_decomposition_methods.pdf}
 \caption{分解方法與基期敏感度}
 \label{fig:methods}
 \end{figure}
@@ -213,7 +259,7 @@ Törnqvist（對數百分點） & 5.094 & $-0.041$ & 0 & $-0.441$ & 4.611 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/figure_05_granularity.pdf}
+\includegraphics[width=0.9\textwidth]{../results/figures/figure_05_granularity.pdf}
 \caption{同制度共同樣本的大類與中類分解}
 \label{fig:grain}
 \end{figure}
@@ -224,7 +270,7 @@ Törnqvist（對數百分點） & 5.094 & $-0.041$ & 0 & $-0.441$ & 4.611 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/figure_06_counterfactual.pdf}
+\includegraphics[width=0.9\textwidth]{../results/figures/figure_06_counterfactual.pdf}
 \caption{實際與固定受僱人數占比的反事實路徑}
 \label{fig:cf}
 \end{figure}
@@ -235,12 +281,12 @@ Törnqvist（對數百分點） & 5.094 & $-0.041$ & 0 & $-0.441$ & 4.611 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/figure_03_employment_shares.pdf}
+\includegraphics[width=0.92\textwidth]{../results/figures/figure_03_employment_shares.pdf}
 \caption{主要行業受僱人數占比與分類修訂}
 \label{fig:shares}
 \end{figure}
 
-bootstrap 的 Laspeyres 結構分量平均為 $-22$ 元，95\% 區間為 $[-1{,}021,\,1{,}065]$ 元，雙尾 $p=\ShiftPValue$；產業內分量區間亦跨零。這些寬區間反映 25 年內景氣循環與產業共同變動的不確定性，不否定會計端點估計，而是提醒端點結果不代表一條精確、穩定的生成機制。
+區塊重抽的 Laspeyres 結構分量平均為 $-22$ 元，95\% 路徑重抽區間為 $[-1{,}021,\,1{,}065]$ 元，雙尾重抽比例 $r_2=\ShiftPValue$；產業內分量區間亦跨零。這些寬區間反映 25 年內景氣循環與產業共同變動的不確定性，不否定會計端點估計，而是提醒端點結果不代表一條精確、穩定的生成機制。
 
 \subsection{年度連鎖路徑：基期敏感性大幅縮小}
 
@@ -268,11 +314,11 @@ Paasche & 年度連鎖 & 2,335 & $-257$ & 28 & 2,107\\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{figures/figure_07_chained_cumulative.pdf}
-\caption{年度連鎖 Laspeyres 累積分量與三年循環區塊 bootstrap 區間}
+\includegraphics[width=0.96\textwidth]{../results/figures/figure_07_chained_cumulative.pdf}
+\caption{年度連鎖 Laspeyres 累積分量與三年循環區塊重抽逐點區間}
 \label{fig:chained}
 \begin{tabnote}[0.96\textwidth]
-陰影為 10,000 次重抽的 95\% 百分位數區間。到 2024 年，四條路徑的區間均跨零；總變動區間寬度大於累積變動絕對值，因此在此時間路徑重抽設計下與零不可區分。
+陰影為 10,000 次重抽的 95\% 百分位數逐點區間（非同時信賴帶）。到 2024 年，四條路徑的區間均跨零；總變動區間寬度大於累積變動絕對值，因此在此時間路徑重抽設計下與零不可區分。逐點區間未控制跨年份多重比較，故在多個時點中可能有若干僅因機會而排除零。
 \end{tabnote}
 \end{figure}
 
@@ -300,18 +346,20 @@ Paasche & 年度連鎖 & 2,335 & $-257$ & 28 & 2,107\\
 \end{tabnote}
 \end{table}
 
-結果表 13 對三項條件式事前預測逐項判定。第一，2019--2021 的端點 Laspeyres 移轉為 137.16 元，大於零；第二，2022--2024 為 $-14.69$ 元，方向反轉；第三，月薪與時薪累積成長差由 2019 年的 10.679 個百分點，經 2020 年 10.689，升至 2021 年 12.190，兩年皆擴大，合計增加 1.511 個百分點。三項均符合所寫方向，但它們是\textbf{條件式事前預測（研究者已觀察全期端點結果）}；本研究不以三項命中計算顯著性或聲稱真正樣本外預測成功。
+結果表 13 對三項條件式事前預測逐項判定。第一，2019--2021 的端點 Laspeyres 移轉為 137.16 元，大於零；第二，2022--2024 為 $-14.69$ 元，方向反轉；第三，月薪與時薪累積成長差由 2019 年的 10.679 個百分點，經 2020 年 10.689，升至 2021 年 12.190，合計增加 1.511 個百分點。
+
+三項預測雖均符合所寫方向，但 P2 的 $-14.69$ 元與 P3 在 2020 年的 0.01 個百分點，其量級相對於同期其他分量而言與零無法區分；P3 的實質擴大集中於 2021 年。因此「三項全數符合」不應被解讀為三次獨立且具鑑別力的成功預測。此外，P1 與 P2 的方向在觀察 COVID 期間住宿餐飲與電子相關製造業的就業變化後即近乎機械地可推得，其確認屬弱證據。三項仍是\textbf{條件式事前預測（研究者已觀察全期端點結果）}，本研究不以命中數計算顯著性或聲稱真正樣本外預測成功。
 
 \begin{table}[htbp]
 \caption{結果表 13：COVID 時期條件式事前預測}
 \centering\small
-\begin{tabularx}{\textwidth}{p{0.9cm}p{2.4cm}Xrp{1.5cm}}
+\begin{tabularx}{\textwidth}{p{0.7cm}p{1.8cm}Xrp{1.2cm}p{3.5cm}}
 \toprule
-編號 & 期間 & 可檢驗方向 & 估計 & 判定\\
+編號 & 期間 & 可檢驗方向 & 估計 & 判定 & 量級判讀\\
 \midrule
-P1 & 2019--2021 & Laspeyres 移轉為正 & 137.16 元 & 支持\\
-P2 & 2022--2024 & Laspeyres 移轉反轉為負 & $-14.69$ 元 & 支持\\
-P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
+P1 & 2019--2021 & Laspeyres 移轉為正 & 137.16 元 & 方向符合 & 相對同期其他分量偏小；方向近乎可由已見就業變化推得\\
+P2 & 2022--2024 & Laspeyres 移轉反轉為負 & $-14.69$ 元 & 方向符合 & 相對同期數百元分量與零無法區分\\
+P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 方向符合 & 2020 年僅 0.01 點；實質擴大集中於 2021 年\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -322,7 +370,7 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.94\textwidth]{figures/figure_08_industry_contributions.pdf}
+\includegraphics[width=0.94\textwidth]{../results/figures/figure_08_industry_contributions.pdf}
 \caption{16 個共同大類的產業內與就業占比移轉貢獻}
 \label{fig:industry-contributions}
 \begin{tabnote}[0.94\textwidth]
@@ -355,13 +403,121 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 結果表 16 交叉使用 2000、2001、2002 三個起點與 2022、2023、2024 三個終點。Laspeyres 總變動介於 4,970 與 6,750 元，九組產業內項全為正，九組移轉項全為負。終點 2023 因總薪資波動而給出較低總額，但沒有改變「正向產業內、負向淨移轉」的方向。這項 3 乘 3 端點檢查比只移動起點更直接呈現非經常性薪資的終點敏感性。
 
+\subsection{外籍移工與產業內組成：事後假設性界限分析}
+
+主計總處的明確涵蓋證據意味製造業平均薪資包含外籍移工。結果表 19 顯示，勞動部年底製造業移工人數由 2000 年 181,998 人增至 2024 年 458,795 人；除以主計總處全年平均製造業受僱員工後，占比由 \MigrantShareStart\% 升至 \MigrantShareEnd\%。同期製造業實質經常性月薪指數由 100 升至 108.98。三個可直接對應的產業合計占比則由 7.50\% 升至 14.46\%。這些路徑只是兩個不同統計母體的描述性比值；分子為年底存量、分母為全年平均，不能解讀為精確的同日就業率。
+
+\begin{table}[htbp]
+\caption{結果表 19：移工占比趨勢與跨來源對應檢查}
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+範圍 & 2000 人數 & 2024 人數 & 2000 占比 & 2024 占比\\
+\midrule
+製造業 & 181,998 & 458,795 & 7.40\% & 16.03\%\\
+營建業 & 37,001 & 32,305 & 8.46\% & 6.53\%\\
+三個直接對應產業合計 & 218,999 & 491,100 & 7.50\% & 14.46\%\\
+\midrule
+占勞動部產業移工總數之對應率 & \multicolumn{2}{c}{2000：99.46\%} & \multicolumn{2}{c}{2024：96.27\%}\\
+\bottomrule
+\end{tabular}
+\begin{tabnote}
+移工為勞動部年底存量；分母為主計總處全年平均受僱員工。三個直接對應產業為製造、營建與廢棄物處理。未對應者主要是薪資調查母體外的農林漁牧業；所有占比均低於預定的 50\% 停止門檻。
+\end{tabnote}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../results/figures/figure_11_migrant_shares_wages.pdf}
+\caption{移工占比與實質經常性薪資路徑}
+\label{fig:migrant-trends}
+\begin{tabnote}[0.92\textwidth]
+上圖為勞動部年底移工存量除以主計總處全年平均受僱員工；下圖為各業實質經常性月薪，2000=100。跨來源時點與母體不同，線條並非同一調查內的精確分組平均。
+\end{tabnote}
+\end{figure}
+
+結果表 20 只報告兩個明示情境形成的範圍。令移工經常性薪資等於年底月基本工資，或等於本國籍經常性薪資的 0.8 倍，逐年反解後再換算製造業產業內貢獻；2000--2024 年「移除移工組成」後的貢獻落在 \MigrantWithinLower--\MigrantWithinUpper 元，相對觀察到的 1,512 元增加 \MigrantAdjustmentLower--\MigrantAdjustmentUpper 元。基本工資是移工薪資情境的低端，因而對反解的本國籍薪資形成高端；0.8 倍情境形成另一端。這個範圍顯示移工組成有現實量級，且調整後製造業的正向產業內貢獻更大，但本文無法識別本國籍勞工實際薪資變動。
+
+\begin{table}[htbp]
+\caption{結果表 20：製造業移工組成的假設性界限}
+\centering\small
+\begin{tabularx}{\textwidth}{Xrr}
+\toprule
+量 & 範圍下端 & 範圍上端\\
+\midrule
+移除移工組成後的製造業產業內貢獻（2024 元／月） & 1,867 & 2,188\\
+相對觀察貢獻 1,512 元的調整（2024 元／月） & 355 & 676\\
+\bottomrule
+\end{tabularx}
+\begin{tabnote}
+這是情境範圍，不是點估計。兩端逐年使用：（A）移工經常性薪資等於當年年底月基本工資；（B）移工經常性薪資等於本國籍經常性薪資的 0.8 倍。分子與分母的年底／全年平均時點差亦未消除。
+\end{tabnote}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../results/figures/figure_12_migrant_hypothetical_bounds.pdf}
+\caption{製造業本國籍經常性薪資的事後假設性界限}
+\label{fig:migrant-bounds}
+\begin{tabnote}[0.92\textwidth]
+陰影只由兩個明示情境形成：（A）移工經常性薪資等於年底月基本工資；（B）等於本國籍經常性薪資的 0.8 倍。陰影內沒有偏好的中點，亦不表示統計信賴區間；黑線是含移工的製造業觀察平均。
+\end{tabnote}
+\end{figure}
+
+\subsection{薪資與勞動生產力的落差：事後描述性會計}
+
+結果表 21 的左側不是薪資調查平均薪資，而是國民所得受僱人員報酬除以受僱員工工時，再以 CPI 平減。共同 16 行業的實質受僱人員報酬時薪在 2000--2024 年增加 \CommonCompGrowth 個對數百分點；恆等式把它配置為勞動生產力 \CommonProductivityGrowth 點、受僱人員報酬份額 \CommonLaborShareGrowth 點，再減去正 \CommonPriceWedge 點的 CPI／產出價格楔子。製造業的相同四個數字分別為 \MfgCompGrowth、\MfgProductivityGrowth、\MfgLaborShareGrowth 與 \MfgPriceWedge 點。換言之，製造業附加價值／工時成長遠快於實質受僱人員報酬／工時，而份額與相對價格兩項均抵銷部分生產力項；這是代數配置，不識別議價、技術、貿易條件或任何制度效果。
+
+\begin{table}[htbp]
+\caption{結果表 21：實質受僱人員報酬時薪與勞動生產力會計，2000--2024}
+\centering\small
+\begin{tabular}{lrrrrr}
+\toprule
+範圍 & 實質報酬時薪 & 生產力 & 報酬份額 & 價格楔子 & 恆等式殘差\\
+\midrule
+共同 16 行業 & 39.48 & 68.22 & $-6.97$ & 21.77 & $<10^{-10}$\\
+製造業 & 67.27 & 143.98 & $-27.08$ & 49.63 & $<10^{-10}$\\
+\bottomrule
+\end{tabular}
+\begin{tabnote}
+單位為對數百分點，且「實質報酬時薪＝生產力＋報酬份額－價格楔子」。報酬份額是受僱人員報酬／名目附加價值，不含自僱者混合所得的勞動報酬設算。共同 16 行業的連鎖實質分業水準加總只作描述性近似。
+\end{tabnote}
+\end{table}
+
+薪資調查的實質經常性時薪指數到 2024 年僅為共同 16 行業 116.83、製造業 123.20（2000=100），明顯不同於國民所得實質受僱人員報酬時薪。差距本身不能稱為「薪資未得到生產力」的單一估計，因為後者包含雇主社會提撥與所有受僱人員報酬，分子、涵蓋和價格概念均不同。圖~\ref{fig:productivity-gap} 以三條線保留這個定義邊界。
+
+\begin{table}[htbp]
+\caption{結果表 22：生產力與國民所得新資料之外部一致性檢查}
+\centering\small
+\begin{tabularx}{\textwidth}{XrrX}
+\toprule
+檢查 & 最大相對差 & 門檻 & 判讀\\
+\midrule
+官方活頁簿對勞動部年報之製造業生產力指數 & 0 & $10^{-12}$ & 通過\\
+名目／連鎖實質產出重算製造業平減指數 & 0.0052\% & 0.05\% & 通過\\
+逐年與端點生產力--報酬恆等式 & $<10^{-10}$ & $10^{-10}$ & 通過\\
+附加價值／工時對官方生產量／工時指數 & 33.98\% & 不設 & 分子概念不同，只報告\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{../results/figures/figure_13_productivity_wage_gap.pdf}
+\caption{實質受僱人員報酬、薪資調查經常性時薪與勞動生產力}
+\label{fig:productivity-gap}
+\begin{tabnote}[0.96\textwidth]
+上排比較附加價值／工時、國民所得實質受僱人員報酬／工時與薪資調查實質經常性時薪；左下刻意並列附加價值／工時與官方生產量／工時，兩者不是同一生產力概念；右下為表 21 的描述性會計，不是因果分解。
+\end{tabnote}
+\end{figure}
+
 \subsection{工時機制與一例一休窗口}
 
 共同樣本的加權正常工時由 2000 年每月 180.23 小時降至 2024 年 161.04 小時；加班工時由 9.85 降至 8.61 小時。圖~\ref{fig:hours} 把 16 行業路徑與加權平均並列，並以 2017、2018 兩條垂直線標出兩次制度調整。2000--2016 年正常工時平均每年下降 1.179 小時，2016--2019 年反而平均每年增加 0.024 小時；改革窗口沒有顯示正常工時下降加速。相對地，加班工時的年變化從改革前 $-0.083$ 小時變成改革窗口 $-0.251$ 小時，下降加快約 0.169 小時。行業差異很大，且窗口同時包含景氣、分類與企業調整，故不能把差值當成政策效果。
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{figures/figure_09_hours_by_industry.pdf}
+\includegraphics[width=0.96\textwidth]{../results/figures/figure_09_hours_by_industry.pdf}
 \caption{共同 16 行業的正常工時與加班工時，2000--2024 年}
 \label{fig:hours}
 \begin{tabnote}[0.96\textwidth]
@@ -379,7 +535,7 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{figures/figure_10_official_comparison.pdf}
+\includegraphics[width=0.95\textwidth]{../results/figures/figure_10_official_comparison.pdf}
 \caption{官方發布實質薪資與共同樣本序列}
 \label{fig:official}
 \begin{tabnote}[0.95\textwidth]
@@ -397,15 +553,21 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 第四，平均薪資的變化也可能來自同一產業內職業、工時型態、性別、年齡、年資與事業規模組成；大類或中類 shift-share 無法辨識這些內部組成。官方查詢介面沒有提供覆蓋 2000--2024 年的一致部分工時人數年序列，本文因此完全不使用部分工時比例，也不建立代理變數。
 
-第五，bootstrap 使用年度時間變異，而非官方抽樣設計資訊。其區間是路徑敏感度指標，不宜解讀為母體參數的設計式信賴區間；規格不確定性則由方法、端點、粒度與涵蓋敏感度處理。最後，本文所有結果均為描述性恆等式，不支持「產業移轉導致薪資」、「一例一休造成工時變動」或「COVID 造成結構移轉」等因果語句。
+第五，移工界限把勞動部年底存量除以主計總處全年平均受僱員工，兩者母體、時點與行業分類不完全相同。本文只有群體總平均，沒有本國籍與移工個別經常性薪資；基本工資與 0.8 倍本國籍薪資只是兩個明示情境，不能保證涵蓋真值，陰影也不是抽樣信賴區間。製造業移工占比上升可能與職務、工時、事業規模或景氣同時變化，本文不能把界限差額歸因於身分組成。
+
+第六，生產力會計混合國民所得分子與薪資調查工時，且共同 16 行業的連鎖實質分業水準不嚴格可加總。受僱人員報酬包含雇主社會提撥，勞動份額卻不設算自僱者混合所得中的勞動報酬；它們都不同於薪資調查的經常性薪資。官方製造業指數以生產量／工時衡量，本文重建值則是附加價值／工時，兩者最大差 33.98\% 是概念邊界，不是可消除的運算誤差。
+
+第七，區塊重抽使用年度時間變異，而非官方抽樣設計資訊。其區間是路徑敏感度指標，不宜解讀為母體參數的設計式信賴區間；規格不確定性則由方法、端點、粒度與涵蓋敏感度處理。最後，本文所有結果均為描述性恆等式，不支持「產業移轉導致薪資」、「一例一休造成工時變動」、「COVID 造成結構移轉」或「份額下降由特定制度造成」等因果語句。
 
 \section{結論}
 
 2000--2024 年台灣工業及服務業共同樣本的實質經常性月薪對數成長僅 4.61\%，但時薪成長 15.56\%。端點 Laspeyres 把 2,107 元變動配置為產業內 2,525 元、移轉 $-12$ 元與交乘 $-407$ 元；年度連鎖則配置為 2,364、$-229$ 與 $-28$ 元。連鎖化把基期敏感的交乘與方法差縮小 93\%，卻沒有把淨移轉改寫成主要正向來源。
 
-第二階段修正了「產業內」的敘事邊界。前三大行業占產業內絕對貢獻 73.46\%，製造業單獨占淨產業內項 59.9\%；因此證據不是所有行業普遍溫和成長，而是少數大型行業的正貢獻抵銷多個負貢獻。總薪資雖成長較快，產業差異同樣集中。制度分段與三項條件式事前預測呈現疫情期間的正向移轉及後續反轉，但事件對齊仍不足以識別制度效果。
+第二階段修正了「產業內」的敘事邊界。前三大行業占產業內絕對貢獻 73.46\%，製造業單獨占淨產業內項 59.9\%；因此證據不是所有行業普遍溫和成長，而是少數大型行業的正貢獻抵銷多個負貢獻。總薪資雖成長較快，產業差異同樣集中。三項條件式預測雖符合方向，兩項關鍵量級卻與零難分；事件對齊仍不足以識別制度效果。
 
 工時結果提供一個更直接的會計解釋：正常工時長期下降，使時薪成長機械性高於月薪；改革窗口內加班工時下降較快，但正常工時沒有比改革前趨勢下降更快。官方發布序列和共同樣本的成長差只有約 0.7 至 0.8 個百分點，且幾乎全由共同樣本界定解釋，CPI 與加總差極小。這增強了主結果的來源透明度，也提醒讀者估計對象不是每年擴張中的官方發布母體。
+
+第三階段的兩項事後補充沒有推翻主結論，卻改變其邊界。製造業移工占比由 7.40\% 增至 16.03\%；在兩個明示情境下，移除組成後的製造業產業內貢獻為 1,867--2,188 元，高於觀察值。製造業生產力--報酬會計則把 67.27 個對數百分點的實質受僱人員報酬時薪成長，配置為 143.98 點生產力、$-27.08$ 點報酬份額，再減 49.63 點價格楔子。前者是界限、後者是恆等式；兩者都不是因果估計，也不能據以推回典型本國籍勞工的薪資。
 
 對政策討論而言，只用「產業升級」或「服務業化」解釋平均薪資停滯過於簡化；把端點分量當成穩定參數也同樣過度。後續研究若要回答因果問題，需要個體或事業單位縱橫資料、職業與僱用型態控制、官方抽樣共變異資訊，以及可辯護的外生變異。本文交付的是具版本、數字映射與測試的描述性基準，而不是因果終點。
 
@@ -413,7 +575,7 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 重現入口為 \ttt{scripts/reproduce\_all.py}。來源雜湊、排除紀錄、所有論文表格 CSV、圖形、測試與 PDF 均收錄於公開 repository。官方原始資料依政府資料開放授權條款使用；程式採 MIT License。
 
-\begin{thebibliography}{12}
+\begin{thebibliography}{18}
 \bibitem[行政院主計總處(2026a)]{dgbas-wage}
 行政院主計總處（2026a），〈薪資及生產力統計〉，政府資料開放平臺，\url{https://data.gov.tw/dataset/10903}。
 
@@ -425,6 +587,15 @@ P3 & 2019--2021 & 月薪--時薪成長差擴大 & 1.511 點 & 支持\\
 
 \bibitem[行政院主計總處(2026c)]{dgbas-platform}
 行政院主計總處（2026c），〈薪情平臺：薪情探索查詢系統〉，\url{https://earnings.dgbas.gov.tw/query_payroll.aspx}。
+
+\bibitem[行政院主計總處(2022)]{dgbas-employee-scope}
+行政院主計總處（2022），〈薪資及生產力統計：全體受僱員工與本國籍全時受僱員工之涵蓋說明〉，\url{https://www.dgbas.gov.tw/news.aspx?n=4437&sms=10980&_CSN=135}。
+
+\bibitem[行政院主計總處(2026d)]{dgbas-national-accounts}
+行政院主計總處（2026d），〈國民所得及經濟成長統計資料庫〉，\url{https://nstatdb.dgbas.gov.tw/dgbasAll/webMain.aspx?funid=dgmaind&sys=100}。
+
+\bibitem[勞動部(2026)]{mol-yearbook}
+勞動部（2026），《114 年勞動統計年報》，表 1-1 與表 13-2，\url{https://statdb.mol.gov.tw/html/year/year.htm}。
 
 \bibitem[世界貿易組織(2026)]{wto2002}
 World Trade Organization (2026), ``Separate Customs Territory of Taiwan, Penghu, Kinmen and Matsu: Member Information,'' \url{https://www.wto.org/English/thewto_e/countries_e/chinese_taipei_e.htm}.
@@ -446,14 +617,21 @@ Kitagawa, Evelyn M. (1955), ``Components of a Difference Between Two Rates,'' \t
 
 \bibitem[Baily et al.(1992)]{baily1992}
 Baily, Martin Neil, Charles Hulten, and David Campbell (1992), ``Productivity Dynamics in Manufacturing Plants,'' \textit{Brookings Papers on Economic Activity: Microeconomics}, 187--267.
+
+\bibitem[Feldstein(2008)]{feldstein2008}
+Feldstein, Martin S. (2008), ``Did Wages Reflect Growth in Productivity?,'' \textit{Journal of Policy Modeling}, 30(4), 591--594, \url{https://www.nber.org/papers/w13953}.
+
+\bibitem[Stansbury and Summers(2018)]{stansbury-summers2018}
+Stansbury, Anna, and Lawrence H. Summers (2018), ``Productivity and Pay: Is the Link Broken?,'' Peterson Institute for International Economics Working Paper 18-5, \url{https://www.piie.com/sites/default/files/documents/wp18-5.pdf}.
 \end{thebibliography}
 
 \appendix
 \section{附錄：預先指定規格與完整輸出}
 
-主樣本端點、敏感度期間、CPI 基期、分解公式、bootstrap 長度與亂數種子在下載資料前寫入 \ttt{PREANALYSIS.md} 並提交 Git。發現教育業在 2009 年前不可得後，只在該文件末端追加共同樣本處理，未改寫原規格。第二階段則先追加「修訂 2」並獨立提交，之後才計算連鎖、制度分段與條件式預測。下列映射是論文結果表號與 CSV 的一對一權威對照；CSV 保留未捨入數值，正文只顯示可讀位數。
+主樣本端點、敏感度期間、CPI 基期、分解公式、區塊長度與亂數種子在下載資料前寫入 \ttt{PREANALYSIS.md} 並提交 Git。發現教育業在 2009 年前不可得後，只在該文件末端追加共同樣本處理，未改寫原規格。第二階段先追加「修訂 2」並獨立提交，之後才計算連鎖、制度分段與條件式預測；第三階段亦先以提交 \ttt{0ce46fb} 追加「修訂 3」，標明移工界限與生產力--報酬會計皆為事後分析，之後才取得新資料。下列映射是論文結果表號與 CSV 的一對一權威對照；CSV 保留未捨入數值，正文只顯示可讀位數。
 
 \newcommand{\resultmap}[3]{#1 & \small\path{#2} & #3\\}
+\small
 \begin{longtable}{p{0.8cm}p{6.3cm}p{6.2cm}}
 \caption{論文結果表號與機器可讀 CSV 的一對一映射}\\
 \toprule
@@ -472,7 +650,7 @@ Baily, Martin Neil, Charles Hulten, and David Campbell (1992), ``Productivity Dy
 \resultmap{06}{table_06_regular_total.csv}{經常性與總薪資}
 \resultmap{07}{table_07_period_sensitivity.csv}{起點敏感度}
 \resultmap{08}{table_08_counterfactual.csv}{固定占比反事實}
-\resultmap{09}{table_09_inference.csv}{端點區塊 bootstrap}
+\resultmap{09}{table_09_inference.csv}{端點區塊重抽}
 \resultmap{10}{table_10_chained_decomposition.csv}{年度連鎖路徑與區間}
 \resultmap{11}{table_11_chained_vs_endpoint.csv}{連鎖與端點比較}
 \resultmap{12}{table_12_institutional_periods.csv}{制度分段}
@@ -482,8 +660,13 @@ Baily, Martin Neil, Charles Hulten, and David Campbell (1992), ``Productivity Dy
 \resultmap{16}{table_16_total_wage_endpoint_sensitivity.csv}{總薪資九組端點}
 \resultmap{17}{table_17_hours_mechanism.csv}{工時路徑與資料可用性}
 \resultmap{18}{table_18_official_comparison.csv}{官方發布序列比較}
+\resultmap{19}{table_19_migrant_trends_validation.csv}{移工占比趨勢與跨來源對應}
+\resultmap{20}{table_20_migrant_hypothetical_bounds.csv}{移工組成事後假設性界限}
+\resultmap{21}{table_21_productivity_decomposition.csv}{生產力--報酬描述性會計}
+\resultmap{22}{table_22_productivity_validation.csv}{生產力新資料一致性檢查}
 \bottomrule
 \end{longtable}
+\normalsize
 
 \end{document}
 

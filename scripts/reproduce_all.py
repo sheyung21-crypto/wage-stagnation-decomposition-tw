@@ -40,7 +40,23 @@ from wagedecomp_tw.ingest import (
     read_annual_cpi,
     read_official_real_wage,
 )
+from wagedecomp_tw.migrant import (
+    manufacturing_contribution_bounds,
+    manufacturing_native_wage_bounds,
+    migrant_mapping_validation,
+    migrant_share_paths,
+    read_migrant_counts,
+    read_minimum_monthly_wage,
+)
 from wagedecomp_tw.panel import aggregate_wage, common_industry_path, enrich_panel
+from wagedecomp_tw.productivity import (
+    productivity_comparison_path,
+    productivity_external_validation,
+    productivity_wage_decomposition,
+    read_dgbas_sdmx_json,
+    read_official_manufacturing_productivity,
+    read_official_productivity_workbook,
+)
 from wagedecomp_tw.provenance import write_results_manifest
 
 
@@ -48,7 +64,6 @@ RAW = ROOT / "data" / "raw"
 INTERIM = ROOT / "data" / "interim"
 TABLES = ROOT / "results" / "tables"
 FIGURES = ROOT / "results" / "figures"
-PAPER_FIGURES = ROOT / "paper" / "figures"
 METRICS = ["regular_monthly", "total_monthly", "regular_hourly", "total_hourly"]
 REAL_METRICS = [f"real_{metric}" for metric in METRICS]
 METHODS = ["laspeyres", "paasche", "tornqvist"]
@@ -350,11 +365,119 @@ def main_tables(
     return tables
 
 
+def phase3_tables(major: pd.DataFrame, cpi: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    migrants = read_migrant_counts(RAW / "mol_foreign_workers_by_work.csv")
+    minimum_wage = read_minimum_monthly_wage(RAW / "mol_major_economic_indicators.csv")
+    shares = migrant_share_paths(migrants, major)
+    mapping = migrant_mapping_validation(migrants, shares)
+
+    wage_paths = []
+    for industry in ("manufacturing", "construction", "water_waste"):
+        data = major.loc[
+            major.industry.eq(industry), ["year", "industry", "real_regular_monthly"]
+        ].copy()
+        data["real_regular_wage_index_2000_100"] = (
+            data.real_regular_monthly
+            / data.loc[data.year.eq(2000), "real_regular_monthly"].iloc[0]
+            * 100.0
+        )
+        wage_paths.append(data)
+    matched = major.loc[
+        major.industry.isin({"manufacturing", "construction", "water_waste"})
+    ].copy()
+    matched["payroll"] = matched.employees * matched.real_regular_monthly
+    matched = matched.groupby("year", as_index=False).agg(
+        employees=("employees", "sum"), payroll=("payroll", "sum")
+    )
+    matched["industry"] = "matched_productive_industries"
+    matched["real_regular_monthly"] = matched.payroll / matched.employees
+    matched["real_regular_wage_index_2000_100"] = (
+        matched.real_regular_monthly
+        / matched.loc[matched.year.eq(2000), "real_regular_monthly"].iloc[0]
+        * 100.0
+    )
+    wage_paths.append(
+        matched[["year", "industry", "real_regular_monthly", "real_regular_wage_index_2000_100"]]
+    )
+    migrant_paths = shares.merge(
+        pd.concat(wage_paths, ignore_index=True),
+        on=["year", "industry"],
+        how="left",
+        validate="one_to_one",
+    )
+    migrant_paths["row_type"] = "industry_path"
+    mapping = mapping.copy()
+    mapping["row_type"] = "mapping_validation"
+    table19 = pd.concat([migrant_paths, mapping], ignore_index=True, sort=False)
+
+    bounds = manufacturing_native_wage_bounds(shares, major, minimum_wage)
+    bounds["row_type"] = "annual_hypothetical_bounds"
+    contribution = manufacturing_contribution_bounds(bounds, major)
+    contribution["row_type"] = "endpoint_contribution_bounds"
+    table20 = pd.concat([bounds, contribution], ignore_index=True, sort=False)
+
+    output = read_dgbas_sdmx_json(RAW / "dgbas_national_accounts_output.json")
+    compensation = read_dgbas_sdmx_json(
+        RAW / "dgbas_national_accounts_compensation.json"
+    )
+    productivity = productivity_wage_decomposition(output, compensation, major, cpi)
+    common = set(major.loc[major.year.eq(2000), "industry"]) & set(
+        major.loc[major.year.eq(2024), "industry"]
+    )
+    survey_rows = []
+    for scope, industries in (
+        ("industry_services_common_16", common),
+        ("manufacturing", {"manufacturing"}),
+    ):
+        data = major.loc[major.industry.isin(industries)].copy()
+        data["payroll"] = data.employees * data.real_regular_hourly
+        annual = data.groupby("year", as_index=False).agg(
+            employees=("employees", "sum"), payroll=("payroll", "sum")
+        )
+        annual["scope"] = scope
+        annual["survey_real_regular_hourly_index_2000_100"] = (
+            annual.payroll / annual.employees
+        ) / (
+            annual.loc[annual.year.eq(2000), "payroll"].iloc[0]
+            / annual.loc[annual.year.eq(2000), "employees"].iloc[0]
+        ) * 100.0
+        survey_rows.append(
+            annual[["scope", "year", "survey_real_regular_hourly_index_2000_100"]]
+        )
+    productivity = productivity.merge(
+        pd.concat(survey_rows, ignore_index=True),
+        on=["scope", "year"],
+        how="left",
+        validate="many_to_one",
+    )
+    productivity["index_base_note"] = "CPI and output-price indexes both rebased to 2024=100 before ratios"
+
+    official_productivity = read_official_manufacturing_productivity(
+        RAW / "mol_major_economic_indicators.csv"
+    )
+    workbook_productivity = read_official_productivity_workbook(
+        RAW / "dgbas_manufacturing_labor_productivity.xlsx"
+    )
+    productivity_validation = productivity_external_validation(
+        productivity, official_productivity, workbook_productivity, output
+    )
+    productivity_validation["row_type"] = "validation_summary"
+    productivity_path = productivity_comparison_path(productivity, official_productivity)
+    productivity_path["row_type"] = "manufacturing_comparison_path"
+    table22 = pd.concat([productivity_validation, productivity_path], ignore_index=True, sort=False)
+
+    return {
+        "table_19_migrant_trends_validation.csv": table19,
+        "table_20_migrant_hypothetical_bounds.csv": table20,
+        "table_21_productivity_decomposition.csv": productivity,
+        "table_22_productivity_validation.csv": table22,
+    }
+
+
 def save_figure(fig: plt.Figure, filename: str) -> None:
     path = FIGURES / filename
     fig.savefig(path, bbox_inches="tight", metadata={"CreationDate": None, "ModDate": None, "Creator": "wagedecomp_tw"})
     plt.close(fig)
-    shutil.copyfile(path, PAPER_FIGURES / filename)
 
 
 def figures(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame, tables: dict[str, pd.DataFrame]) -> None:
@@ -440,7 +563,14 @@ def figures(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame, ta
         estimate = chained[f"cumulative_{component}"].to_numpy(float)
         lower = chained[f"cumulative_{component}_bootstrap_ci_lower"].to_numpy(float)
         upper = chained[f"cumulative_{component}_bootstrap_ci_upper"].to_numpy(float)
-        ax.fill_between(chained.year, lower, upper, color="0.85", linewidth=0, label="95% block-bootstrap CI")
+        ax.fill_between(
+            chained.year,
+            lower,
+            upper,
+            color="0.85",
+            linewidth=0,
+            label="95% path-resampling interval",
+        )
         ax.plot(chained.year, estimate, color="0.15", linewidth=1.6, label="Observed cumulative path")
         ax.axhline(0, color="0.6", linewidth=0.7)
         ax.set_title(title, fontsize=9)
@@ -495,9 +625,124 @@ def figures(major: pd.DataFrame, vintage: pd.DataFrame, middle: pd.DataFrame, ta
         ax.legend(frameon=False, fontsize=7)
     save_figure(fig, "figure_10_official_comparison.pdf")
 
+    migrant = tables["table_19_migrant_trends_validation.csv"]
+    migrant = migrant.loc[migrant.row_type.eq("industry_path")]
+    migrant_labels = {
+        "manufacturing": "Manufacturing",
+        "construction": "Construction",
+        "water_waste": "Water/waste",
+        "matched_productive_industries": "Matched three-industry total",
+    }
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 5.8), sharex=True)
+    for industry, shade in zip(migrant_labels, ("0.1", "0.38", "0.62", "0.78")):
+        data = migrant.loc[migrant.industry.eq(industry)].sort_values("year")
+        axes[0].plot(
+            data.year,
+            data.migrant_share * 100.0,
+            color=shade,
+            linewidth=1.6,
+            label=migrant_labels[industry],
+        )
+        axes[1].plot(
+            data.year,
+            data.real_regular_wage_index_2000_100,
+            color=shade,
+            linewidth=1.6,
+            label=migrant_labels[industry],
+        )
+    axes[0].set_ylabel("Migrant / employees (%)")
+    axes[0].legend(frameon=False, fontsize=7, ncol=2)
+    axes[1].set(ylabel="Real regular wage index (2000=100)", xlabel="Year")
+    axes[1].legend(frameon=False, fontsize=7, ncol=2)
+    save_figure(fig, "figure_11_migrant_shares_wages.pdf")
+
+    migrant_bounds = tables["table_20_migrant_hypothetical_bounds.csv"]
+    migrant_bounds = migrant_bounds.loc[
+        migrant_bounds.row_type.eq("annual_hypothetical_bounds")
+    ].sort_values("year")
+    fig, ax = plt.subplots(figsize=(7.2, 4.0))
+    ax.fill_between(
+        migrant_bounds.year.to_numpy(float),
+        migrant_bounds.native_real_regular_monthly_lower_2024_twd.to_numpy(float),
+        migrant_bounds.native_real_regular_monthly_upper_2024_twd.to_numpy(float),
+        color="0.82",
+        linewidth=0,
+        label="Hypothetical native-wage interval",
+    )
+    ax.plot(
+        migrant_bounds.year,
+        migrant_bounds.observed_real_regular_monthly_2024_twd,
+        color="0.12",
+        linewidth=1.8,
+        label="Observed manufacturing average",
+    )
+    ax.set(xlabel="Year", ylabel="Monthly regular wage (2024 TWD)")
+    ax.legend(frameon=False, fontsize=8)
+    save_figure(fig, "figure_12_migrant_hypothetical_bounds.pdf")
+
+    productivity = tables["table_21_productivity_decomposition.csv"]
+    annual_productivity = productivity.loc[productivity.row_type.eq("annual_path")]
+    endpoint_productivity = productivity.loc[
+        productivity.row_type.eq("endpoint_2000_2024")
+    ]
+    productivity_validation = tables["table_22_productivity_validation.csv"]
+    productivity_path = productivity_validation.loc[
+        productivity_validation.row_type.eq("manufacturing_comparison_path")
+    ]
+    fig, axes = plt.subplots(2, 2, figsize=(7.4, 6.2))
+    for ax, scope, title in (
+        (axes[0, 0], "industry_services_common_16", "Industry/services common 16"),
+        (axes[0, 1], "manufacturing", "Manufacturing"),
+    ):
+        data = annual_productivity.loc[annual_productivity.scope.eq(scope)].sort_values("year")
+        ax.plot(data.year, data.labor_productivity_index_2000_100, color="0.1", linewidth=1.6, label="Value added/hour")
+        ax.plot(data.year, data.real_consumer_compensation_index_2000_100, color="0.45", linestyle="--", linewidth=1.6, label="Real employee compensation/hour")
+        ax.plot(data.year, data.survey_real_regular_hourly_index_2000_100, color="0.7", linestyle=":", linewidth=1.6, label="Survey real regular wage/hour")
+        ax.set(title=title, xlabel="Year", ylabel="Index (2000=100)")
+        ax.legend(frameon=False, fontsize=6.5)
+    axes[1, 0].plot(
+        productivity_path.year,
+        productivity_path.reconstructed_value_added_per_hour_2021_100,
+        color="0.1",
+        linewidth=1.6,
+        label="Reconstructed value added/hour",
+    )
+    axes[1, 0].plot(
+        productivity_path.year,
+        productivity_path.official_manufacturing_productivity_2021_100,
+        color="0.6",
+        linestyle="--",
+        linewidth=1.6,
+        label="Official production-volume/hour index",
+    )
+    axes[1, 0].set(title="Manufacturing concept comparison", xlabel="Year", ylabel="Index (2021=100)")
+    axes[1, 0].legend(frameon=False, fontsize=6.5)
+
+    labels = ["Productivity", "Labor share", "− price wedge", "Real compensation"]
+    x = np.arange(2)
+    width = 0.19
+    scope_labels = ["Common 16", "Manufacturing"]
+    endpoint_productivity = endpoint_productivity.set_index("scope").loc[
+        ["industry_services_common_16", "manufacturing"]
+    ]
+    bar_values = [
+        endpoint_productivity.labor_productivity_log_change.to_numpy(float),
+        endpoint_productivity.employee_compensation_share_log_change.to_numpy(float),
+        -endpoint_productivity.price_wedge_log_change.to_numpy(float),
+        endpoint_productivity.real_consumer_compensation_log_change.to_numpy(float),
+    ]
+    for index, (label, values, shade) in enumerate(zip(labels, bar_values, ("0.15", "0.38", "0.62", "0.82"))):
+        axes[1, 1].bar(x + (index - 1.5) * width, values * 100.0, width, color=shade, label=label)
+    axes[1, 1].axhline(0, color="0.5", linewidth=0.7)
+    axes[1, 1].set_xticks(x, scope_labels)
+    axes[1, 1].set(title="2000–2024 accounting components", ylabel="Log percentage points")
+    axes[1, 1].legend(frameon=False, fontsize=6.2, ncol=2)
+    fig.tight_layout()
+    save_figure(fig, "figure_13_productivity_wage_gap.pdf")
+
 
 def main() -> int:
-    for directory in (INTERIM, TABLES, FIGURES, PAPER_FIGURES):
+    for directory in (INTERIM, TABLES, FIGURES):
         directory.mkdir(parents=True, exist_ok=True)
     source_manifest = build_source_manifest(RAW, ROOT / "data" / "source_manifest.csv")
     cpi = read_annual_cpi(RAW / "cpi_basic_classification.xml")
@@ -552,6 +797,10 @@ def main() -> int:
     tables = main_tables(major, vintage, middle, major_official, official_real)
     inference = block_bootstrap_decomposition(major, "real_regular_monthly", 2000, 2024)
     tables["table_09_inference.csv"] = inference
+    cpi_rebased = cpi.assign(
+        cpi_2024_100=cpi.cpi / cpi.loc[cpi.year.eq(2024), "cpi"].iloc[0] * 100.0
+    )
+    tables.update(phase3_tables(major, cpi_rebased))
     for filename, frame in tables.items():
         write_csv(frame, TABLES / filename)
     for path in FIGURES.glob("*"):

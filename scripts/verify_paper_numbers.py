@@ -71,6 +71,22 @@ def main() -> int:
     official = pd.read_csv(ROOT / "results" / "tables" / "table_18_official_comparison.csv")
     official = official.loc[official.row_type.eq("growth_gap_decomposition")]
     official_summary = official.drop_duplicates("composition").set_index("composition")
+    migrant = pd.read_csv(ROOT / "results" / "tables" / "table_19_migrant_trends_validation.csv")
+    migrant = migrant.loc[
+        migrant.row_type.eq("industry_path") & migrant.industry.eq("manufacturing")
+    ].set_index("year")
+    migrant_bounds = pd.read_csv(
+        ROOT / "results" / "tables" / "table_20_migrant_hypothetical_bounds.csv"
+    )
+    migrant_bounds = migrant_bounds.loc[
+        migrant_bounds.row_type.eq("endpoint_contribution_bounds")
+    ].iloc[0]
+    productivity = pd.read_csv(
+        ROOT / "results" / "tables" / "table_21_productivity_decomposition.csv"
+    )
+    productivity = productivity.loc[
+        productivity.row_type.eq("endpoint_2000_2024")
+    ].set_index("scope")
     expected = {
         "MainGrowth": round(float(monthly_hourly.loc["regular", "monthly_log_growth_percent"]), 2),
         "HourlyGrowth": round(float(monthly_hourly.loc["regular", "hourly_log_growth_percent"]), 2),
@@ -92,6 +108,20 @@ def main() -> int:
         "OfficialTotalGrowth": round(float(official_summary.loc["total", "official_published_log_growth_percent"]), 2),
         "RegularOfficialGap": round(float(official_summary.loc["regular", "observed_official_minus_common_growth_gap_percentage_points"]), 2),
         "TotalOfficialGap": round(float(official_summary.loc["total", "observed_official_minus_common_growth_gap_percentage_points"]), 2),
+        "MigrantShareStart": round(float(migrant.loc[2000, "migrant_share"]) * 100.0, 2),
+        "MigrantShareEnd": round(float(migrant.loc[2024, "migrant_share"]) * 100.0, 2),
+        "MigrantWithinLower": round(float(migrant_bounds.composition_removed_within_contribution_lower_2024_twd)),
+        "MigrantWithinUpper": round(float(migrant_bounds.composition_removed_within_contribution_upper_2024_twd)),
+        "MigrantAdjustmentLower": round(float(migrant_bounds.composition_adjustment_lower_2024_twd)),
+        "MigrantAdjustmentUpper": round(float(migrant_bounds.composition_adjustment_upper_2024_twd)),
+        "CommonCompGrowth": round(float(productivity.loc["industry_services_common_16", "real_consumer_compensation_log_change"]) * 100.0, 2),
+        "CommonProductivityGrowth": round(float(productivity.loc["industry_services_common_16", "labor_productivity_log_change"]) * 100.0, 2),
+        "CommonLaborShareGrowth": round(float(productivity.loc["industry_services_common_16", "employee_compensation_share_log_change"]) * 100.0, 2),
+        "CommonPriceWedge": round(float(productivity.loc["industry_services_common_16", "price_wedge_log_change"]) * 100.0, 2),
+        "MfgCompGrowth": round(float(productivity.loc["manufacturing", "real_consumer_compensation_log_change"]) * 100.0, 2),
+        "MfgProductivityGrowth": round(float(productivity.loc["manufacturing", "labor_productivity_log_change"]) * 100.0, 2),
+        "MfgLaborShareGrowth": round(float(productivity.loc["manufacturing", "employee_compensation_share_log_change"]) * 100.0, 2),
+        "MfgPriceWedge": round(float(productivity.loc["manufacturing", "price_wedge_log_change"]) * 100.0, 2),
     }
     missing = sorted(set(expected) - set(values))
     if missing:
