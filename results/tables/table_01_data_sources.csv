@@ -1,0 +1,13 @@
+﻿notes,classification_version,files,bytes,first_coverage
+major-industry annual table,10,4,155169,2000-2019
+major-industry annual table,11,4,184768,2005-2024
+middle-industry annual table,10,210,2880820,2016
+middle-industry annual table,11,168,2567616,2021
+monthly all-items CPI,not_applicable,1,15743815,1981-latest
+official crosswalk,10-11,1,355482,TSIC 10 to 11
+official crosswalk,7-8,1,277280,TSIC 7 to 8
+official crosswalk,8-9,1,219136,TSIC 8 to 9
+official crosswalk,9-10,1,112088,TSIC 9 to 10
+official open-data source index,10,1,40660,2019 release index
+same-vintage major-industry validation table,10,20,887724,historical through 2016; analysis uses 2016
+same-vintage major-industry validation table,11,12,559966,historical through 2021; analysis uses 2021

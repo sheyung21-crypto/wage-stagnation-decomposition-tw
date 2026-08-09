@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+data/interim/python_packages/
+data/interim/artifact_tool_check/
+data/interim/pdf_render/
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.xdv
+paper/main.pdf

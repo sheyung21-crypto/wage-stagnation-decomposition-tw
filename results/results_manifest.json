@@ -1,0 +1,79 @@
+{
+  "files": [
+    {
+      "path": "results/figures/figure_01_real_monthly_hourly.pdf",
+      "bytes": 10794,
+      "sha256": "e97f1bc085d225f2b4b7810467965aae9af62707e521be0bf9ca5d955261e5a4"
+    },
+    {
+      "path": "results/figures/figure_02_regular_total.pdf",
+      "bytes": 10451,
+      "sha256": "b27903b7b16e5d1261bb360d4cf507d0efac43fb0532597cb77973376ab7e4f4"
+    },
+    {
+      "path": "results/figures/figure_03_employment_shares.pdf",
+      "bytes": 13193,
+      "sha256": "8634c87f60564bea4449ee001af6f48016ca71d2566d0ae5525dbc5410f5c7de"
+    },
+    {
+      "path": "results/figures/figure_04_decomposition_methods.pdf",
+      "bytes": 12029,
+      "sha256": "76a5ee19ae9b84c9acf8f5423c3950cd1c110f7ceb08ec91cdbcc7ea01fd2644"
+    },
+    {
+      "path": "results/figures/figure_05_granularity.pdf",
+      "bytes": 11248,
+      "sha256": "5ef5ed6eacebcac4d3992bb20fe1897818a1751d375d8111914c10103831a662"
+    },
+    {
+      "path": "results/figures/figure_06_counterfactual.pdf",
+      "bytes": 11368,
+      "sha256": "35aa9c0fa4b407be94b34f3a47b7b80a93bcb1911012a120bd8bd9f127025186"
+    },
+    {
+      "path": "results/tables/table_01_data_sources.csv",
+      "bytes": 765,
+      "sha256": "c935e2fff5e3e03e13a7bc0a5af264839829c6bdbb3ab336ef056fd10dd1f231"
+    },
+    {
+      "path": "results/tables/table_02_external_validation.csv",
+      "bytes": 1501,
+      "sha256": "39c959ccfa6599811b1c0cc6c29c392f19b7c0bae0308dab0dba612a5f496804"
+    },
+    {
+      "path": "results/tables/table_03_main_decomposition.csv",
+      "bytes": 2190,
+      "sha256": "2063621b33cff5d99f38b15369b9c3faec997ba406a0f7d880f69883fa878939"
+    },
+    {
+      "path": "results/tables/table_04_granularity_comparison.csv",
+      "bytes": 1773,
+      "sha256": "ee9a9a1288a502e016c89df40b52d74bfa80e036a0d110efb6e1065baf2a8722"
+    },
+    {
+      "path": "results/tables/table_05_monthly_hourly.csv",
+      "bytes": 356,
+      "sha256": "eddce38366f0eb5f37c3ec0167a3895c961528b797f4a947fe06dd0d46dca2c5"
+    },
+    {
+      "path": "results/tables/table_06_regular_total.csv",
+      "bytes": 407,
+      "sha256": "8d656d84faf61960ece27807679e588172acd740bd3aa83b3bb4362c89233fda"
+    },
+    {
+      "path": "results/tables/table_07_period_sensitivity.csv",
+      "bytes": 4479,
+      "sha256": "aaf53cd7ff08690e2e2e782c1d7529c779dcc777d3a69a999885802d12cd604f"
+    },
+    {
+      "path": "results/tables/table_08_counterfactual.csv",
+      "bytes": 4832,
+      "sha256": "b3a739e54d3637f2c620b2124c5740f42b96583c5cf3b3b75c902981af264e14"
+    },
+    {
+      "path": "results/tables/table_09_inference.csv",
+      "bytes": 643,
+      "sha256": "b7b2ad6021fedfdd0917f7202a581a9f898b4e9b6a52bf055741d6170c939fbd"
+    }
+  ]
+}

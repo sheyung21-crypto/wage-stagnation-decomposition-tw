@@ -1,0 +1,16 @@
+﻿check,metric,maximum_relative_error,year_of_maximum,mean_relative_error,periods_checked,threshold,passed
+latest_major_vs_official,employees,0.0000000000,2000,0.0000000000,25,0.0050000000,True
+latest_major_vs_official,regular_monthly,0.0000234221,2009,0.0000096598,25,0.0050000000,True
+latest_major_vs_official,total_monthly,0.0000120356,2010,0.0000048787,25,0.0050000000,True
+latest_major_vs_official,regular_hours,0.0004667563,2015,0.0001524355,25,0.0050000000,True
+latest_major_vs_official,total_hours,0.0005182188,2013,0.0002210616,25,0.0050000000,True
+same_vintage_major_vs_official,employees,0.0000000000,2016,0.0000000000,9,0.0050000000,True
+same_vintage_major_vs_official,regular_monthly,0.0000172584,2018,0.0000100018,9,0.0050000000,True
+same_vintage_major_vs_official,total_monthly,0.0000079594,2021,0.0000053027,9,0.0050000000,True
+same_vintage_major_vs_official,regular_hours,0.0004140417,2020,0.0001967621,9,0.0050000000,True
+same_vintage_major_vs_official,total_hours,0.0004896402,2020,0.0001746525,9,0.0050000000,True
+middle_vs_same_vintage_major,employees,0.0000009840,2021,0.0000001093,9,0.0050000000,True
+middle_vs_same_vintage_major,regular_monthly,0.0000078149,2019,0.0000033135,9,0.0050000000,True
+middle_vs_same_vintage_major,total_monthly,0.0000045855,2019,0.0000024781,9,0.0050000000,True
+middle_vs_same_vintage_major,regular_hours,0.0001933988,2020,0.0000957888,9,0.0050000000,True
+middle_vs_same_vintage_major,total_hours,0.0003269787,2020,0.0001531733,9,0.0050000000,True

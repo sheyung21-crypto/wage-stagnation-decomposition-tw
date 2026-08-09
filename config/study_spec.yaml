@@ -1,0 +1,31 @@
+project:
+  title: "台灣實質薪資停滯的分解"
+  author: "楊世永"
+  email: "sheyung21@gmail.com"
+  language: "zh-Hant"
+sample:
+  main_start: 2000
+  main_end: 2024
+  sensitivity_starts: [2008, 2016]
+  middle_regimes:
+    tsic10: [2016, 2020]
+    tsic11: [2021, 2024]
+prices:
+  reference_year: 2024
+  cpi_item_prefix: "總指數"
+decomposition:
+  methods: [laspeyres, paasche, tornqvist]
+  metrics:
+    - regular_monthly
+    - total_monthly
+    - regular_hourly
+    - total_hourly
+inference:
+  method: circular_moving_block_bootstrap
+  block_length: 3
+  replications: 10000
+  seed: 20260809
+validation:
+  maximum_relative_error: 0.005
+  identity_tolerance: 1.0e-10
+

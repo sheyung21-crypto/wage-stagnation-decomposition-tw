@@ -1,0 +1,7 @@
+﻿rule_id,stage,reason,rows_before,rows_excluded,rows_after,affected_period,notes
+coverage_education_pre2009,endpoint_common_sample,Education is officially unavailable before 2009 and is not imputed,416,0,416,2000-2008,Long-run endpoint decompositions use 16 industries common to both endpoints
+official_combined_workbook_01,middle_ingest,Adjacent-table or exact duplicate rows embedded in the official workbook,not_applicable,3,not_applicable,2018,table_group=9
+official_combined_workbook_02,middle_ingest,Adjacent-table or exact duplicate rows embedded in the official workbook,not_applicable,3,not_applicable,2018,table_group=13
+official_combined_workbook_03,middle_ingest,Adjacent-table or exact duplicate rows embedded in the official workbook,not_applicable,3,not_applicable,2019,table_group=13
+official_combined_workbook_04,middle_ingest,Adjacent-table or exact duplicate rows embedded in the official workbook,not_applicable,3,not_applicable,2020,table_group=13
+official_combined_workbook_05,middle_ingest,Adjacent-table or exact duplicate rows embedded in the official workbook,not_applicable,29,not_applicable,2016-2024,table_group=combined_workbooks
